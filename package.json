@@ -1,0 +1,63 @@
+{
+  "name": "react-bindings",
+  "version": "1.0.0",
+  "description": "Data bindings for React",
+  "keywords": [],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "https://github.com/Panchain/react-bindings.git",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "audit": "yarn audit --moderate",
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "trash lib",
+    "generate:docs": "npx typedoc src/index.ts",
+    "lint": "eslint 'src/**/*.ts?(x)' --max-warnings 0",
+    "prepublishOnly": "yarn clean && yarn test && yarn audit && yarn clean && yarn build && yarn generate:docs",
+    "test": "yarn test:check-circular-dependencies && yarn test:unit-tests",
+    "test:check-circular-dependencies": "yarn build && npx madge --circular ./lib",
+    "test:unit-tests:": "npx jest --runInBand --coverage",
+    "test:unit-tests": "yarn test:unit-tests: src"
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "dependencies": {
+    "client-run-queue": "^1.1.0",
+    "is-promise": "^4.0.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.1",
+    "@types/lodash": "4.14.182",
+    "@types/react": "16.9.0",
+    "@types/react-dom": "16.9.0",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "eslint": "8.17.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-tsdoc": "^0.2.16",
+    "jest": "28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
+    "madge": "5.0.1",
+    "prettier": "2.6.2",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "trash-cli": "5.0.0",
+    "ts-jest": "^28.0.5",
+    "typedoc": "^0.22.17",
+    "typescript": "4.7.3"
+  },
+  "resolutions": {
+    "@types/react": "16.9.0"
+  }
+}

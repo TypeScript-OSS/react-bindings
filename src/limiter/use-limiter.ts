@@ -1,0 +1,58 @@
+import { DEFAULT_PRIORITY } from 'client-run-queue';
+import { useEffect, useMemo, useRef } from 'react';
+
+import { useDefaultQueue } from '../default-queue/default-queue-context';
+import { makeLimiter } from './make-limiter';
+import type { LimiterOptions } from './options';
+
+const noOp = () => {};
+
+export interface Limiter {
+  /** Cancels any outstanding function calls and scheduled queue entries */
+  cancel: () => void;
+  /** Runs or schedules the specified function.  The specified function replaces any previous function used with this limiter */
+  limit: (run: () => void) => void;
+}
+
+/** Creates a limiter which can be used to debounce or throttle a function call. */
+export const useLimiter = ({
+  id,
+  cancelOnUnmount = false,
+  limitType = 'debounce',
+  limitMode = 'trailing',
+  limitMSec = 0,
+  priority = DEFAULT_PRIORITY,
+  queue
+}: LimiterOptions & {
+  /** A technical, but human-readable ID, which isn't guaranteed to be unique */
+  id: string;
+  /**
+   * If true, any previously scheduled functions are automatically canceled on unmount
+   *
+   * @defaultValue `false`
+   */
+  cancelOnUnmount?: boolean;
+}) => {
+  const defaultQueue = useDefaultQueue();
+
+  queue = queue ?? defaultQueue;
+
+  const previousLimiter = useRef<Limiter | undefined>();
+  const limiter = useMemo<Limiter>(
+    () => makeLimiter({ id, limitMSec, limitMode, limitType, priority, queue: queue! }),
+    [id, limitMSec, limitMode, limitType, priority, queue]
+  );
+
+  // If the limiter changed, cancel the previous one since it's no longer managed by this hook
+  if (previousLimiter.current !== undefined && previousLimiter.current !== limiter) {
+    previousLimiter.current.cancel();
+  }
+  previousLimiter.current = limiter;
+
+  const unmountCleanup = useRef(noOp);
+  unmountCleanup.current = cancelOnUnmount ? limiter.cancel : noOp;
+
+  useEffect(() => () => unmountCleanup.current());
+
+  return limiter;
+};
