@@ -6,8 +6,11 @@ export interface DerivedBindingOptions<GetT> extends LimiterOptions {
   /** A technical, but human-readable ID, which isn't guaranteed to be unique */
   id: string;
 
-  // TODO: update this comment
-  /** Hook dependencies */
+  /**
+   * On a rerender, deps changes are treated like bindings changes.  That is, if they change between renders, the input change detection
+   * logic is run (using the `areInputValuesEqual`, `detectInputChanges`, and `makeComparableInputValue` values) using the limiter (see
+   * `LimiterProps`).
+   */
   deps?: DependencyList;
 
   /**
