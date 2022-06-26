@@ -27,7 +27,7 @@ export const useLimiter = ({
   /** A technical, but human-readable ID, which isn't guaranteed to be unique */
   id: string;
   /**
-   * If true, any previously scheduled functions are automatically canceled on unmount
+   * If `true`, any previously scheduled functions are automatically canceled on unmount
    *
    * @defaultValue `false`
    */

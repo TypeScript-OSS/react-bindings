@@ -20,10 +20,10 @@ export interface DerivedBindingOptions<GetT> extends LimiterOptions {
    */
   areInputValuesEqual?: (a: any, b: any) => true;
   /**
-   * - If true – `areInputValuesEqual` is used to compare the old and new results of `makeComparableInputValue` when any of the input
+   * - If `true` – `areInputValuesEqual` is used to compare the old and new results of `makeComparableInputValue` when any of the input
    * bindings or `deps` are changed.  If the values are equal, the transformer won't be run.  If they're unequal, the transformer will be
    * run.
-   * - If false – old and new values aren't compared, the transformer will always be run.
+   * - If `false` – old and new values aren't compared, the transformer will always be run.
    *
    * @defaultValue `true`
    */
@@ -44,10 +44,10 @@ export interface DerivedBindingOptions<GetT> extends LimiterOptions {
    */
   areOutputValuesEqual?: (a: GetT, b: GetT) => any;
   /**
-   * - If true – `areOutputValuesEqual` is used to compare the old and new results of the transformer function, each time it's run.  If the
+   * - If `true` – `areOutputValuesEqual` is used to compare the old and new results of the transformer function, each time it's run.  If the
    * values are equal, the derived binding's value won't be changed.  If they're unequal, the binding value will be changed and listeners
    * will be notified.
-   * - If false – old and new results of the transformer function aren't compared.  The derived binding's value will always be changed each
+   * - If `false` – old and new results of the transformer function aren't compared.  The derived binding's value will always be changed each
    * time the transformer function is run.
    *
    * @defaultValue `true`
