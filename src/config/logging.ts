@@ -1,8 +1,7 @@
 let globalLogger: Logger = {};
 
 const globalSpecialLoggingEnabledFor: Partial<Record<SpecialLoggingType, boolean | undefined>> = {
-  'binding-lock-duration-warnings': false,
-  'waitable-locking-warnings': false
+  'binding-lock-duration-warnings': false
 };
 
 /** We currently only use debug, but have included the other standard names as a warning for potential future use */
@@ -22,7 +21,7 @@ export const setLogger = (logger: Logger) => {
   globalLogger = logger;
 };
 
-export type SpecialLoggingType = 'binding-lock-duration-warnings' | 'waitable-locking-warnings';
+export type SpecialLoggingType = 'binding-lock-duration-warnings';
 
 /** Checks if logging is enabled for the specified type */
 export const isSpecialLoggingEnabledFor = (type: SpecialLoggingType) => globalSpecialLoggingEnabledFor[type] ?? false;
