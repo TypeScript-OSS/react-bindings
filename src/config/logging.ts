@@ -4,7 +4,6 @@ const globalSpecialLoggingEnabledFor: Partial<Record<SpecialLoggingType, boolean
   'binding-lock-duration-warnings': false
 };
 
-/** We currently only use debug, but have included the other standard names as a warning for potential future use */
 export interface Logger {
   debug?: (message?: any, ...optionalParams: any[]) => void;
   error?: (message?: any, ...optionalParams: any[]) => void;
