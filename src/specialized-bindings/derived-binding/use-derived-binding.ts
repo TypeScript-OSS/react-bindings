@@ -23,7 +23,7 @@ type ExtractNamedBindingsValues<NamedBindingsT extends Record<string, ReadonlyBi
 };
 
 /** A derived binding is a binding derived from zero or more other bindings */
-export function useDerivedBinding<GetT, NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>(
+export const useDerivedBinding = <GetT, NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>(
   bindings: SingleOrArray<ReadonlyBinding | undefined> | NamedBindingsT,
   transformer: (bindingValues: ExtractNamedBindingsValues<NamedBindingsT>) => GetT,
   {
@@ -40,7 +40,7 @@ export function useDerivedBinding<GetT, NamedBindingsT extends Record<string, Re
     priority,
     queue
   }: DerivedBindingOptions<GetT>
-): ReadonlyBinding<GetT> {
+): ReadonlyBinding<GetT> => {
   const limiterProps: LimiterOptions = { limitMode, limitMSec, limitType, priority, queue };
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
@@ -85,4 +85,4 @@ export function useDerivedBinding<GetT, NamedBindingsT extends Record<string, Re
   });
 
   return internalBinding;
-}
+};

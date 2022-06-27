@@ -35,7 +35,7 @@ type ExtractNamedBindingsValues<NamedBindingsT extends Record<string, ReadonlyBi
  * @returns a function that can be called anytime to cancel the most recent limited callback.  This is useful, for example, if the the
  * callback would have triggered a re-render that we, by other means, know to be unnecessary.
  */
-export function useBindingEffect<NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>(
+export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>(
   bindings: SingleOrArray<ReadonlyBinding | undefined> | NamedBindingsT,
   callback: (bindingValues: ExtractNamedBindingsValues<NamedBindingsT>) => void,
   {
@@ -52,7 +52,7 @@ export function useBindingEffect<NamedBindingsT extends Record<string, ReadonlyB
     priority,
     queue
   }: UseBindingEffectOptions = {}
-): () => void {
+): (() => void) => {
   const limiterProps = { limitMode, limitMSec, limitType, priority, queue };
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
@@ -180,7 +180,7 @@ export function useBindingEffect<NamedBindingsT extends Record<string, ReadonlyB
     // We don't care about the result here -- just want to update the tracking
     checkAndUpdateIfInputChanged();
   };
-}
+};
 
 // Helpers
 

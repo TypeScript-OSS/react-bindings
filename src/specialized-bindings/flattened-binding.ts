@@ -23,7 +23,7 @@ type ExtractNamedBindingsValues<NamedBindingsT extends Record<string, ReadonlyBi
 };
 
 /** Use when a binding contains another binding, to listen to the second-level binding if either the first or second levels change */
-export function useFlattenedBinding<GetT, NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>(
+export const useFlattenedBinding = <GetT, NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>(
   bindings: SingleOrArray<ReadonlyBinding | undefined> | NamedBindingsT,
   transformer: (bindingValues: ExtractNamedBindingsValues<NamedBindingsT>) => ReadonlyBinding<GetT>,
   {
@@ -41,7 +41,7 @@ export function useFlattenedBinding<GetT, NamedBindingsT extends Record<string, 
     priority,
     queue
   }: DerivedBindingOptions<GetT>
-): ReadonlyBinding<GetT> {
+): ReadonlyBinding<GetT> => {
   const limiterProps = { limitMode, limitMSec, limitType, priority, queue };
 
   const isMounted = useIsMountedRef();
@@ -112,4 +112,4 @@ export function useFlattenedBinding<GetT, NamedBindingsT extends Record<string, 
   });
 
   return internalBinding;
-}
+};
