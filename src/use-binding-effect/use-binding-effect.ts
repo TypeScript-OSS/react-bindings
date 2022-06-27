@@ -85,9 +85,13 @@ export function useBindingEffect<NamedBindingsT extends Record<string, ReadonlyB
   );
 
   /** Only used when `detectInputChanges` is `false` and `triggerOnMount` is `'if-input-changed'` */
-  const lastChangeUids = useRef<string | undefined>(
-    !detectInputChanges && triggerOnMount === 'if-input-changed' ? makeChangeUidsString(stableAllBindings) : undefined
-  );
+  const lastChangeUids = useRef<string | undefined>();
+
+  const limiter = useLimiter({
+    id: id ?? 'use-binding-effect',
+    cancelOnUnmount: true,
+    ...limiterProps
+  });
 
   const checkAndUpdateIfInputChanged = useCallbackRef(() => {
     if (detectInputChanges) {
@@ -113,12 +117,6 @@ export function useBindingEffect<NamedBindingsT extends Record<string, ReadonlyB
     }
   });
 
-  const limiter = useLimiter({
-    id: id ?? 'use-binding-effect',
-    cancelOnUnmount: true,
-    ...limiterProps
-  });
-
   const triggerCallback = useCallbackRef((needsInputChangeTrackingUpdate: boolean) => {
     if (needsInputChangeTrackingUpdate) {
       // We don't care about the result here -- just want to update the tracking
@@ -137,6 +135,15 @@ export function useBindingEffect<NamedBindingsT extends Record<string, ReadonlyB
     triggerCallback(false);
   });
 
+  const isFirstRender = useRef(true);
+  if (isFirstRender.current) {
+    isFirstRender.current = false;
+
+    if (!detectInputChanges && triggerOnMount === 'if-input-changed') {
+      lastChangeUids.current = makeChangeUidsString(stableAllBindings);
+    }
+  }
+
   useEffect(() => {
     const removers: ChangeListenerRemover[] = [];
     for (const b of stableAllBindings) {
@@ -154,7 +161,6 @@ export function useBindingEffect<NamedBindingsT extends Record<string, ReadonlyB
   }, [limiter, performChecksAndTriggerCallbackIfNeeded, stableAllBindings]);
 
   const isFirstMount = useRef(true);
-
   useEffect(() => {
     if (
       triggerOnMount === true ||
