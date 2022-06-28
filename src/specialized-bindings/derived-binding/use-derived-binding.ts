@@ -11,7 +11,7 @@ import type { EmptyObject } from '../../types/empty';
 import { useBindingEffect } from '../../use-binding-effect/use-binding-effect';
 import type { DerivedBindingOptions } from './options';
 
-const defaultNamedBindingValues: Readonly<EmptyObject> = Object.freeze({});
+const emptyNamedBindingValues: Readonly<EmptyObject> = Object.freeze({});
 
 /** Extracts the value types from bindings */
 type ExtractNamedBindingsValues<NamedBindingsT extends Record<string, ReadonlyBinding | undefined>> = {
@@ -49,7 +49,7 @@ export const useDerivedBinding = <GetT, NamedBindingsT extends Record<string, Re
 
   const getNamedBindingValues = () => {
     if (namedBindingsKeys === undefined || namedBindings === undefined) {
-      return defaultNamedBindingValues as ExtractNamedBindingsValues<NamedBindingsT>;
+      return emptyNamedBindingValues as ExtractNamedBindingsValues<NamedBindingsT>;
     }
 
     const namedBindingValues: Partial<ExtractNamedBindingsValues<NamedBindingsT>> = {};

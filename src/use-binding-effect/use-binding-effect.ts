@@ -15,8 +15,8 @@ import type { SingleOrArray } from '../types/array-like';
 import type { EmptyObject } from '../types/empty';
 import type { UseBindingEffectOptions } from './types/options';
 
-const defaultNamedBindings = Object.freeze({} as EmptyObject);
-const defaultNamedBindingValues: Readonly<EmptyObject> = Object.freeze({});
+const emptyNamedBindings = Object.freeze({} as EmptyObject);
+const emptyNamedBindingValues: Readonly<EmptyObject> = Object.freeze({});
 
 /** Extracts the value types from bindings */
 type ExtractNamedBindingsValues<NamedBindingsT extends Record<string, ReadonlyBinding | undefined>> = {
@@ -60,13 +60,13 @@ export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyB
   const namedBindings = isNonNamedBindings ? undefined : bindings;
   const namedBindingsKeys = namedBindings !== undefined ? getTypedKeys(namedBindings) : undefined;
   const stableAllBindings = useStableValue(
-    isNonNamedBindings ? normalizeAsArray(nonNamedBindings) : Object.values(namedBindings ?? defaultNamedBindings)
+    isNonNamedBindings ? normalizeAsArray(nonNamedBindings) : Object.values(namedBindings ?? emptyNamedBindings)
   );
 
   // Doesn't need to be stable since Refreshable will always get rendered with the latest anyway
   const getNamedBindingValues = () => {
     if (namedBindingsKeys === undefined || namedBindings === undefined) {
-      return defaultNamedBindingValues as ExtractNamedBindingsValues<NamedBindingsT>;
+      return emptyNamedBindingValues as ExtractNamedBindingsValues<NamedBindingsT>;
     }
 
     const namedBindingValues: Partial<ExtractNamedBindingsValues<NamedBindingsT>> = {};
