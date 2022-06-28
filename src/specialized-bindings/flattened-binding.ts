@@ -34,7 +34,7 @@ export const useFlattenedBinding = <GetT, NamedBindingsT extends Record<string, 
     makeComparableInputValue,
     areOutputValuesEqual,
     detectOutputChanges = true,
-    // LimiterProps
+    // LimiterOptions
     limitMode,
     limitMSec,
     limitType,
@@ -42,7 +42,7 @@ export const useFlattenedBinding = <GetT, NamedBindingsT extends Record<string, 
     queue
   }: DerivedBindingOptions<GetT>
 ): ReadonlyBinding<GetT> => {
-  const limiterProps = { limitMode, limitMSec, limitType, priority, queue };
+  const limiterOptions = { limitMode, limitMSec, limitType, priority, queue };
 
   const isMounted = useIsMountedRef();
 
@@ -93,7 +93,7 @@ export const useFlattenedBinding = <GetT, NamedBindingsT extends Record<string, 
       detectInputChanges,
       makeComparableInputValue,
       triggerOnMount: true,
-      ...limiterProps
+      ...limiterOptions
     }
   );
 

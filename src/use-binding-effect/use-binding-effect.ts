@@ -45,7 +45,7 @@ export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyB
     detectInputChanges = false,
     makeComparableInputValue,
     triggerOnMount = 'if-input-changed',
-    // LimiterProps
+    // LimiterOptions
     limitMode,
     limitMSec,
     limitType,
@@ -53,7 +53,7 @@ export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyB
     queue
   }: UseBindingEffectOptions = {}
 ): (() => void) => {
-  const limiterProps = { limitMode, limitMSec, limitType, priority, queue };
+  const limiterOptions = { limitMode, limitMSec, limitType, priority, queue };
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
   const nonNamedBindings = isNonNamedBindings ? bindings : undefined;
@@ -90,7 +90,7 @@ export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyB
   const limiter = useLimiter({
     id: id ?? 'use-binding-effect',
     cancelOnUnmount: true,
-    ...limiterProps
+    ...limiterOptions
   });
 
   const checkAndUpdateIfInputChanged = useCallbackRef(() => {

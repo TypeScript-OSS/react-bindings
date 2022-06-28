@@ -64,7 +64,7 @@ export const BindingsConsumer = <NamedBindingsT extends Record<string, ReadonlyB
   areInputValuesEqual,
   detectInputChanges = false,
   makeComparableInputValue,
-  // LimiterProps
+  // LimiterOptions
   limitMode,
   limitMSec,
   limitType,
@@ -73,7 +73,7 @@ export const BindingsConsumer = <NamedBindingsT extends Record<string, ReadonlyB
 }: BindingsConsumerProps<NamedBindingsT> & {
   children: (bindingValues: ExtractNamedBindingsValues<NamedBindingsT>) => ReactNode;
 }) => {
-  const limiterProps: LimiterOptions = { limitMode, limitMSec, limitType, priority, queue };
+  const limiterOptions: LimiterOptions = { limitMode, limitMSec, limitType, priority, queue };
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
   const nonNamedBindings = isNonNamedBindings ? bindings : undefined;
@@ -102,7 +102,7 @@ export const BindingsConsumer = <NamedBindingsT extends Record<string, ReadonlyB
     areInputValuesEqual,
     detectInputChanges,
     makeComparableInputValue,
-    ...limiterProps
+    ...limiterOptions
   });
 
   return (

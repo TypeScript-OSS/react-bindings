@@ -41,7 +41,7 @@ export const useDerivedBinding = <GetT, NamedBindingsT extends Record<string, Re
     queue
   }: DerivedBindingOptions<GetT>
 ): ReadonlyBinding<GetT> => {
-  const limiterProps: LimiterOptions = { limitMode, limitMSec, limitType, priority, queue };
+  const limiterOptions: LimiterOptions = { limitMode, limitMSec, limitType, priority, queue };
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
   const namedBindings = isNonNamedBindings ? undefined : bindings;
@@ -81,7 +81,7 @@ export const useDerivedBinding = <GetT, NamedBindingsT extends Record<string, Re
     areInputValuesEqual,
     detectInputChanges,
     makeComparableInputValue,
-    ...limiterProps
+    ...limiterOptions
   });
 
   return internalBinding;

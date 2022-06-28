@@ -9,7 +9,7 @@ export interface UseBindingEffectOptions extends LimiterOptions {
   /**
    * On a rerender, deps changes are treated like bindings changes.  That is, if they change between renders, the input change detection
    * logic is run (using the `areInputValuesEqual`, `detectInputChanges`, and `makeComparableInputValue` values) using the limiter (see
-   * `LimiterProps`).
+   * `LimiterOptions`).
    */
   deps?: DependencyList;
 
