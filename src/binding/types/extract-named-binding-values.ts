@@ -1,5 +1,5 @@
-import type { InferBindingGetType } from '../../../binding/types/inference';
-import type { ReadonlyBinding } from '../../../binding/types/readonly-binding';
+import type { InferBindingGetType } from './inference';
+import type { ReadonlyBinding } from './readonly-binding';
 
 /** Extracts the value types from named bindings */
 export type ExtractNamedBindingsValues<NamedBindingsT extends Record<string, ReadonlyBinding | undefined>> = {

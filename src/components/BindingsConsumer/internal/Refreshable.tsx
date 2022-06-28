@@ -1,21 +1,24 @@
-import React, { MutableRefObject, ReactNode, useState } from 'react';
+import React, { MutableRefObject, useState } from 'react';
 import ReactDOM from 'react-dom';
 
+import type { ExtractNamedBindingsValues } from '../../../binding/types/extract-named-binding-values';
 import type { ReadonlyBinding } from '../../../binding/types/readonly-binding';
 import { useIsMountedRef } from '../../../internal-hooks/use-is-mounted-ref';
-import { ExtractNamedBindingsValues } from './types';
+import type { BindingsConsumerRenderCallback } from '../types/render-callback';
 
 /** A component that returns a refresh method that can be used to manually rerender */
 export const Refreshable = <NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>({
   cancelLastPendingRefresh,
+  getNamedBindings,
   getNamedBindingValues,
   refreshControls,
   render
 }: {
   cancelLastPendingRefresh: () => void;
+  getNamedBindings: () => NamedBindingsT;
   getNamedBindingValues: () => ExtractNamedBindingsValues<NamedBindingsT>;
   refreshControls: MutableRefObject<{ refresh?: () => void }>;
-  render: (bindingValues: ExtractNamedBindingsValues<NamedBindingsT>) => ReactNode;
+  render: BindingsConsumerRenderCallback<NamedBindingsT>;
 }) => {
   const isMounted = useIsMountedRef();
 
@@ -30,5 +33,5 @@ export const Refreshable = <NamedBindingsT extends Record<string, ReadonlyBindin
 
   cancelLastPendingRefresh();
 
-  return <>{render(getNamedBindingValues())}</>;
+  return <>{render(getNamedBindingValues(), getNamedBindings())}</>;
 };

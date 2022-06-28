@@ -1,7 +1,7 @@
 import { DEFAULT_PRIORITY, RunQueue, RunQueueEntry } from 'client-run-queue';
 import _, { DebouncedFunc } from 'lodash';
 
-import { LimiterOptions, LimitMode } from './options';
+import type { LimiterOptions, LimitMode } from './options';
 
 const noOp = () => {};
 

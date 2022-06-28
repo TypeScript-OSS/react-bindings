@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { useEffect, useRef } from 'react';
 
 import type { ChangeListenerRemover } from '../binding/types/change-listener';
-import type { InferBindingGetType } from '../binding/types/inference';
+import type { ExtractNamedBindingsValues } from '../binding/types/extract-named-binding-values';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
 import { isBinding } from '../binding-utils/type-utils';
 import { areEqual } from '../config/are-equal';
@@ -18,14 +18,17 @@ import type { UseBindingEffectOptions } from './types/options';
 const emptyNamedBindings = Object.freeze({} as EmptyObject);
 const emptyNamedBindingValues: Readonly<EmptyObject> = Object.freeze({});
 
-/** Extracts the value types from bindings */
-type ExtractNamedBindingsValues<NamedBindingsT extends Record<string, ReadonlyBinding | undefined>> = {
-  [KeyT in keyof NamedBindingsT]: NamedBindingsT[KeyT] extends ReadonlyBinding
-    ? InferBindingGetType<NamedBindingsT[KeyT]>
-    : NamedBindingsT[KeyT] extends ReadonlyBinding | undefined
-    ? InferBindingGetType<NamedBindingsT[KeyT]> | undefined
-    : NamedBindingsT[KeyT];
-};
+/**
+ * Called when the associated bindings change, depending on the options provided to `useBindingEffect`.
+ *
+ * @param bindingValues - The extracted values of the associated named bindings.  If named bindings aren't used, this will be an empty
+ * object.
+ * @param bindings - The original named bindings if named bindings are used or an empty object otherwise.
+ */
+export type UseBindingEffectCallback<NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>> = (
+  bindingValues: ExtractNamedBindingsValues<NamedBindingsT>,
+  bindings: NamedBindingsT
+) => void;
 
 /**
  * Calls the specified callback function any time any of the specified bindings are changed.
@@ -37,7 +40,7 @@ type ExtractNamedBindingsValues<NamedBindingsT extends Record<string, ReadonlyBi
  */
 export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>(
   bindings: SingleOrArray<ReadonlyBinding | undefined> | NamedBindingsT,
-  callback: (bindingValues: ExtractNamedBindingsValues<NamedBindingsT>) => void,
+  callback: UseBindingEffectCallback<NamedBindingsT>,
   {
     id,
     deps,
@@ -123,7 +126,7 @@ export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyB
       checkAndUpdateIfInputChanged();
     }
 
-    callback(getNamedBindingValues());
+    callback(getNamedBindingValues(), namedBindings ?? (emptyNamedBindings as NamedBindingsT));
   });
 
   const performChecksAndTriggerCallbackIfNeeded = useCallbackRef(() => {

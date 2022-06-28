@@ -1,4 +1,5 @@
 import { runInDom, sleep } from '../../__test_dependency__';
+import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
 import { useBinding } from '../../binding/use-binding';
 import { useBindingEffect } from '../use-binding-effect';
 
@@ -7,8 +8,9 @@ describe('useBindingEffect', () => {
     runInDom(({ onMount }) => {
       const b = useBinding(() => 0, { id: 'test' });
 
-      const callback = jest.fn(({ b }: { b: number }) => {
+      const callback = jest.fn(({ b }: { b: number }, bindings: { b: ReadonlyBinding<number> }) => {
         expect(b).toBe(0);
+        expect(bindings.b.get()).toBe(0);
       });
 
       useBindingEffect({ b }, callback);
