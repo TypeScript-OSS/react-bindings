@@ -51,4 +51,57 @@ describe('BindingsConsumer', () => {
 
       return <MyComponent />;
     }));
+
+  it('leading-and-trailing debounced rendering should update right away on the first change and then after changes have stopped', () =>
+    runInDom(({ onMount }) => {
+      let b: Binding<number>;
+
+      const consumerRenderer = jest.fn(({ b }: { b: number }) => <span>{b}</span>);
+
+      const MyComponent: ComponentType = jest.fn(() => {
+        b = useBinding(() => 0, { id: 'test' });
+
+        return (
+          <BindingsConsumer bindings={{ b }} limitMode="leading-and-trailing" limitMSec={100}>
+            {consumerRenderer}
+          </BindingsConsumer>
+        );
+      });
+
+      onMount(async (rootElement) => {
+        expect(MyComponent).toHaveBeenCalledTimes(1);
+        expect(consumerRenderer).toHaveBeenCalledTimes(1);
+        expect(rootElement.innerHTML).toBe('<span>0</span>');
+
+        await sleep(300); // giving time to render
+
+        expect(MyComponent).toHaveBeenCalledTimes(1);
+        expect(consumerRenderer).toHaveBeenCalledTimes(1);
+        expect(rootElement.innerHTML).toBe('<span>0</span>');
+
+        b.set(1);
+        await sleep(10);
+
+        expect(MyComponent).toHaveBeenCalledTimes(1);
+        expect(consumerRenderer).toHaveBeenCalledTimes(2);
+        expect(rootElement.innerHTML).toBe('<span>1</span>');
+
+        for (let i = 2; i < 25; i += 1) {
+          b.set(i);
+          await sleep(10);
+
+          expect(MyComponent).toHaveBeenCalledTimes(1);
+          expect(consumerRenderer).toHaveBeenCalledTimes(2);
+          expect(rootElement.innerHTML).toBe('<span>1</span>');
+        }
+
+        await sleep(300); // giving time to render
+
+        expect(MyComponent).toHaveBeenCalledTimes(1);
+        expect(consumerRenderer).toHaveBeenCalledTimes(3);
+        expect(rootElement.innerHTML).toBe('<span>24</span>');
+      });
+
+      return <MyComponent />;
+    }));
 });

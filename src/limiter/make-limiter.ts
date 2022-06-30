@@ -31,9 +31,8 @@ export const makeLimiter = ({
       queueEntry?.cancel();
       queueEntry = undefined;
 
-      lodashLimiter?.cancel();
-      lodashLimiter = undefined;
-
+      // Not actually canceling the lodashLimiter because we don't want the limiting state to reset, but changing the runner to a noOp so it
+      // won't do anything
       runner = noOp;
     },
     limit: (run: () => void) => {
