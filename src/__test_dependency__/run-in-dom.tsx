@@ -1,10 +1,13 @@
 /* istanbul ignore file */
 
 import React, { ComponentType, ReactNode } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 
 import { sleep } from './sleep';
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+(globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
 
 type OnMountHandler = (rootElement: HTMLElement) => void | Promise<void>;
 type OnUnmountHandler = () => void | Promise<void>;
@@ -30,7 +33,8 @@ export const runInDom = async <T = ReactNode | void,>(useFunc: (props: Props) =>
 
     const Component = ((props: Props) => useFunc(props) ?? null) as ComponentType<Props>;
 
-    ReactDOM.render(<Component onMount={registerOnMount} onUnmount={registerOnUnmount} />, div);
+    const root = createRoot(div);
+    root.render(<Component onMount={registerOnMount} onUnmount={registerOnUnmount} />);
     registerOnMount = undefined;
     registerOnUnmount = undefined;
 
@@ -42,7 +46,7 @@ export const runInDom = async <T = ReactNode | void,>(useFunc: (props: Props) =>
     }
     onMountHandlers.length = 0;
 
-    expect(ReactDOM.unmountComponentAtNode(div)).toBe(true);
+    root.unmount();
 
     for (const onUnmountHandler of onUnmountHandlers) {
       await onUnmountHandler();
