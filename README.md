@@ -13,8 +13,8 @@ This package provides an implementation of bindings that works well with React a
 
 In the following example, we demonstrate creating, reading, and updating a binding as well as observing it for changes in two ways:
 
-- using useBindingEffect, which triggers a callback whenever the associated bindings change
-- using BindingsConsumer, which runs a render function whenever the associated bindings change
+- using `useBindingEffect`, which triggers a callback whenever the associated bindings change
+- using `BindingsConsumer`, which runs a render function whenever the associated bindings change
 
 ```typescript
 import React from 'react';
@@ -155,6 +155,8 @@ export const MyComponent = () => {
 Thanks for checking it out.  Feel free to create issues or otherwise provide feedback.
 
 react-bindings is maintained by the team at [Passfolio](https://www.passfolio.com).
+
+[API Docs](https://panchain.github.io/react-bindings/)
 
 <!-- Definitions -->
 
