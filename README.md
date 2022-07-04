@@ -16,6 +16,8 @@ In the following example, we demonstrate creating, reading, and updating a bindi
 - using `useBindingEffect`, which triggers a callback whenever the associated bindings change
 - using `BindingsConsumer`, which runs a render function whenever the associated bindings change
 
+[Try it Out – CodeSandbox](https://codesandbox.io/s/sad-resonance-815sq2)
+
 ```typescript
 import React from 'react';
 import { BindingsConsumer, useBinding, useBindingEffect } from 'react-bindings';
@@ -44,9 +46,9 @@ export const MyComponent = () => {
   // By default, these rerenders are debounced.
   return (
     <div>
-      <span>
-        myBinding: <BindingsConsumer bindings={{ myBinding }}>{({ myBinding }) => myBinding}</BindingsConsumer>
-      </span>
+      myBinding:&nbsp;
+      <BindingsConsumer bindings={{ myBinding }}>{({ myBinding }) => myBinding}</BindingsConsumer>
+      &nbsp;
       <button onClick={onIncClick}>Increment</button>
     </div>
   );
@@ -67,13 +69,15 @@ For cases where you want to observe but not modify, you can use the `ReadonlyBin
 
 In the following example, we make a component that is updated with a new random number every second.  It displays the number as well as whether or not the number is even.
 
+[Try it Out – CodeSandbox](https://codesandbox.io/s/holy-leaf-bn3mrh)
+
 ```typescript
 import React, { useEffect } from 'react';
 import { Binding, BindingsConsumer, useBinding, useDerivedBinding } from 'react-bindings';
 
 const streamRandomNumbers = (binding: Binding<number>) => {
   const next = () => {
-    binding.set(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
+    binding.set(Math.floor(Math.random() * 100));
     timeout = setTimeout(next, 1000);
   };
 
@@ -103,12 +107,9 @@ export const MyComponent = () => {
   // change.
   return (
     <div>
-      <span>
-        <BindingsConsumer bindings={{ myBinding }}>{({ myBinding }) => myBinding}</BindingsConsumer>
-      </span>
-      <span>
-        is even: <BindingsConsumer bindings={{ isEven }}>{({ isEven }) => (isEven ? 'true' : 'false')}</BindingsConsumer>
-      </span>
+      <BindingsConsumer bindings={{ myBinding }}>{({ myBinding }) => myBinding}</BindingsConsumer>
+      &nbsp;is even:&nbsp;
+      <BindingsConsumer bindings={{ isEven }}>{({ isEven }) => (isEven ? 'true' : 'false')}</BindingsConsumer>
     </div>
   );
 };
@@ -119,6 +120,8 @@ In the above example, we could have also chosen to set `limitType: 'none'` on th
 ## Extensibility Example
 
 To demonstrate binding extensibility, let's revise the above example so that the `isEven` function is a property of `myBinding` directly, instead of being a derived binding.
+
+[Try it Out – CodeSandbox](https://codesandbox.io/s/heuristic-leaf-2i94pv)
 
 ```typescript
 export const MyComponent = () => {
@@ -140,8 +143,9 @@ export const MyComponent = () => {
       <BindingsConsumer bindings={myBinding}>
         {() => (
           <>
-            <span>{myBinding.get()}</span>
-            <span>is even: {myBinding.isEven() ? 'true' : 'false'}</span>
+            {myBinding.get()}
+            &nbsp;is even:&nbsp;
+            {myBinding.isEven() ? 'true' : 'false'}
           </>
         )}
       </BindingsConsumer>
