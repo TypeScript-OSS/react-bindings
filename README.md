@@ -160,7 +160,7 @@ Thanks for checking it out.  Feel free to create issues or otherwise provide fee
 
 react-bindings is maintained by the team at [Passfolio](https://www.passfolio.com).
 
-[API Docs](https://panchain.github.io/react-bindings/)
+[API Docs](https://passfolio.github.io/react-bindings/)
 
 <!-- Definitions -->
 

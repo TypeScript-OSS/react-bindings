@@ -1,6 +1,6 @@
 {
   "name": "react-bindings",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Data bindings for React",
   "keywords": [
     "bindings",
@@ -11,8 +11,8 @@
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "repository": "https://github.com/Panchain/react-bindings.git",
-  "homepage": "https://panchain.github.io/react-bindings/",
+  "repository": "https://github.com/Passfolio/react-bindings.git",
+  "homepage": "https://passfolio.github.io/react-bindings/",
   "license": "MIT",
   "private": false,
   "scripts": {
@@ -32,7 +32,7 @@
     "react-dom": ">=16.9.0"
   },
   "dependencies": {
-    "client-run-queue": "^1.1.5",
+    "client-run-queue": "^1.1.7",
     "is-promise": "^4.0.0",
     "lodash": "^4.17.21"
   },
