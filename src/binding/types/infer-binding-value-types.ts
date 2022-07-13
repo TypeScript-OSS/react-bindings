@@ -1,4 +1,4 @@
-import type { BindingDependencies, BindingArrayDependencies, NamedBindingDependencies } from './binding-dependencies';
+import type { BindingArrayDependencies, BindingDependencies, NamedBindingDependencies } from './binding-dependencies';
 import type { ExtractBindingsArrayValues } from './extract-bindings-array-values';
 import type { ExtractNamedBindingsValues } from './extract-named-binding-values';
 import type { InferBindingGetType } from './inference';

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { useEffect, useRef } from 'react';
 
-import type { BindingDependencies, BindingArrayDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
+import type { BindingArrayDependencies, BindingDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
 import type { ChangeListenerRemover } from '../binding/types/change-listener';
 import type { InferBindingValueTypes } from '../binding/types/infer-binding-value-types';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';

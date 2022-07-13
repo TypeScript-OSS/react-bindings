@@ -1,7 +1,7 @@
 import { UI_PRIORITY } from 'client-run-queue';
 import React, { useRef } from 'react';
 
-import type { BindingDependencies, BindingArrayDependencies, NamedBindingDependencies } from '../../binding/types/binding-dependencies';
+import type { BindingArrayDependencies, BindingDependencies, NamedBindingDependencies } from '../../binding/types/binding-dependencies';
 import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
 import { isBinding } from '../../binding-utils/type-utils';
 import { normalizeAsArray } from '../../internal-utils/array-like';
