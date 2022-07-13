@@ -1,22 +1,22 @@
 import _ from 'lodash';
 import { useEffect, useRef } from 'react';
 
+import type { BindingDependencies, BindingsArrayDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
 import type { ChangeListenerRemover } from '../binding/types/change-listener';
-import type { ExtractNamedBindingsValues } from '../binding/types/extract-named-binding-values';
+import type { ExtractBindingValueTypes } from '../binding/types/extract-binding-value-types';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
 import { isBinding } from '../binding-utils/type-utils';
 import { areEqual } from '../config/are-equal';
 import { useCallbackRef } from '../internal-hooks/use-callback-ref';
 import { useStableValue } from '../internal-hooks/use-stable-value';
 import { normalizeAsArray } from '../internal-utils/array-like';
+import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
 import { getTypedKeys } from '../internal-utils/get-typed-keys';
 import { useLimiter } from '../limiter/use-limiter';
-import type { SingleOrArray } from '../types/array-like';
 import type { EmptyObject } from '../types/empty';
 import type { UseBindingEffectOptions } from './types/options';
 
 const emptyNamedBindings = Object.freeze({} as EmptyObject);
-const emptyNamedBindingValues: Readonly<EmptyObject> = Object.freeze({});
 
 /**
  * Called when the associated bindings change, depending on the options provided to `useBindingEffect`.
@@ -25,9 +25,9 @@ const emptyNamedBindingValues: Readonly<EmptyObject> = Object.freeze({});
  * object.
  * @param bindings - The original named bindings if named bindings are used or an empty object otherwise.
  */
-export type UseBindingEffectCallback<NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>> = (
-  bindingValues: ExtractNamedBindingsValues<NamedBindingsT>,
-  bindings: NamedBindingsT
+export type UseBindingEffectCallback<DependenciesT extends BindingDependencies = Record<string, never>> = (
+  bindingValues: ExtractBindingValueTypes<DependenciesT>,
+  bindings: DependenciesT
 ) => void;
 
 /**
@@ -38,9 +38,9 @@ export type UseBindingEffectCallback<NamedBindingsT extends Record<string, Reado
  * @returns a function that can be called anytime to cancel the most recent limited callback.  This is useful, for example, if the the
  * callback would have triggered a re-render that we, by other means, know to be unnecessary.
  */
-export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>(
-  bindings: SingleOrArray<ReadonlyBinding | undefined> | NamedBindingsT,
-  callback: UseBindingEffectCallback<NamedBindingsT>,
+export const useBindingEffect = <DependenciesT extends BindingDependencies = Record<string, never>>(
+  bindings: DependenciesT,
+  callback: UseBindingEffectCallback<DependenciesT>,
   {
     id,
     deps,
@@ -59,30 +59,19 @@ export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyB
   const limiterOptions = { limitMode, limitMSec, limitType, priority, queue };
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
-  const nonNamedBindings = isNonNamedBindings ? bindings : undefined;
-  const namedBindings = isNonNamedBindings ? undefined : bindings;
+  const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingsArrayDependencies) : undefined;
+  const namedBindings = isNonNamedBindings ? undefined : (bindings as NamedBindingDependencies);
   const namedBindingsKeys = namedBindings !== undefined ? getTypedKeys(namedBindings) : undefined;
   const stableAllBindings = useStableValue(
     isNonNamedBindings ? normalizeAsArray(nonNamedBindings) : Object.values(namedBindings ?? emptyNamedBindings)
   );
 
-  // Doesn't need to be stable since Refreshable will always get rendered with the latest anyway
-  const getNamedBindingValues = () => {
-    if (namedBindingsKeys === undefined || namedBindings === undefined) {
-      return emptyNamedBindingValues as ExtractNamedBindingsValues<NamedBindingsT>;
-    }
-
-    const namedBindingValues: Partial<ExtractNamedBindingsValues<NamedBindingsT>> = {};
-    for (const key of namedBindingsKeys) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      namedBindingValues[key] = namedBindings[key]?.get();
-    }
-
-    return namedBindingValues as ExtractNamedBindingsValues<NamedBindingsT>;
-  };
+  // Doesn't need to be stable since always used in a callback ref
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  const getDependencyValues = () => extractBindingDependencyValues<DependenciesT>({ bindings, namedBindingsKeys });
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  makeComparableInputValue = makeComparableInputValue ?? (() => [getAllBindingValues(stableAllBindings), deps]);
+  makeComparableInputValue = makeComparableInputValue ?? (() => [getDependencyValues(), deps]);
   const lastComparableInputValue = useRef(
     detectInputChanges && (triggerOnMount === false || triggerOnMount === 'if-input-changed') ? makeComparableInputValue() : undefined
   );
@@ -126,7 +115,7 @@ export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyB
       checkAndUpdateIfInputChanged();
     }
 
-    callback(getNamedBindingValues(), namedBindings ?? (emptyNamedBindings as NamedBindingsT));
+    callback(getDependencyValues(), bindings);
   });
 
   const performChecksAndTriggerCallbackIfNeeded = useCallbackRef(() => {
@@ -186,15 +175,6 @@ export const useBindingEffect = <NamedBindingsT extends Record<string, ReadonlyB
 };
 
 // Helpers
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-const getAllBindingValues = (bindings: Array<ReadonlyBinding | undefined>): any[] => {
-  const output: any[] = [];
-  for (const b of bindings) {
-    output.push(b?.get());
-  }
-  return output;
-};
 
 const makeChangeUidsString = (bindings: Array<ReadonlyBinding | undefined>) => {
   const array: string[] = [];

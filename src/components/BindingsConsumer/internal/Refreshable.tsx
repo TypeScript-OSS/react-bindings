@@ -1,24 +1,24 @@
 import React, { MutableRefObject, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import type { ExtractNamedBindingsValues } from '../../../binding/types/extract-named-binding-values';
-import type { ReadonlyBinding } from '../../../binding/types/readonly-binding';
+import type { BindingDependencies } from '../../../binding/types/binding-dependencies';
+import type { ExtractBindingValueTypes } from '../../../binding/types/extract-binding-value-types';
 import { useIsMountedRef } from '../../../internal-hooks/use-is-mounted-ref';
 import type { BindingsConsumerRenderCallback } from '../types/render-callback';
 
 /** A component that returns a refresh method that can be used to manually rerender */
-export const Refreshable = <NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>({
+export const Refreshable = <DependenciesT extends BindingDependencies = Record<string, never>>({
   cancelLastPendingRefresh,
-  getNamedBindings,
-  getNamedBindingValues,
+  getDependencies,
+  getDependencyValues,
   refreshControls,
   render
 }: {
   cancelLastPendingRefresh: () => void;
-  getNamedBindings: () => NamedBindingsT;
-  getNamedBindingValues: () => ExtractNamedBindingsValues<NamedBindingsT>;
+  getDependencies: () => DependenciesT;
+  getDependencyValues: () => ExtractBindingValueTypes<DependenciesT>;
   refreshControls: MutableRefObject<{ refresh?: () => void }>;
-  render: BindingsConsumerRenderCallback<NamedBindingsT>;
+  render: BindingsConsumerRenderCallback<DependenciesT>;
 }) => {
   const isMounted = useIsMountedRef();
 
@@ -33,5 +33,5 @@ export const Refreshable = <NamedBindingsT extends Record<string, ReadonlyBindin
 
   cancelLastPendingRefresh();
 
-  return <>{render(getNamedBindingValues(), getNamedBindings())}</>;
+  return <>{render(getDependencyValues(), getDependencies())}</>;
 };

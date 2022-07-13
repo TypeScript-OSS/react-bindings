@@ -1,39 +1,34 @@
 import { useEffect, useRef } from 'react';
 
-import type { ExtractNamedBindingsValues } from '../binding/types/extract-named-binding-values';
+import type { BindingDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
+import type { ExtractBindingValueTypes } from '../binding/types/extract-binding-value-types';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
 import { useBinding } from '../binding/use-binding';
 import { isBinding } from '../binding-utils/type-utils';
-import { useCallbackRef } from '../internal-hooks/use-callback-ref';
 import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
 import { useStableValue } from '../internal-hooks/use-stable-value';
+import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
 import { getTypedKeys } from '../internal-utils/get-typed-keys';
-import type { SingleOrArray } from '../types/array-like';
-import type { EmptyObject } from '../types/empty';
 import { useBindingEffect } from '../use-binding-effect/use-binding-effect';
 import type { DerivedBindingOptions } from './derived-binding/options';
-
-const emptyNamedBindings = Object.freeze({} as EmptyObject);
-const emptyNamedBindingValues: Readonly<EmptyObject> = Object.freeze({});
 
 /**
  * Called to extract the second-level binding on the initial render and anytime the dependencies change.
  *
- * @param bindingValues - The extracted values of the associated named bindings.  If named bindings aren't used, this will be an empty
- * object.
- * @param bindings - The original named bindings if named bindings are used or an empty object otherwise.
+ * @param bindingValues - The extracted values of bindings.
+ * @param bindings - The original bindings.
  *
  * @returns The second-level binding (i.e. a binding determined dynamically by executing this function)
  */
-export type UseFlattenedBindingTransformer<
-  GetT,
-  NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>
-> = (bindingValues: ExtractNamedBindingsValues<NamedBindingsT>, bindings: NamedBindingsT) => ReadonlyBinding<GetT>;
+export type UseFlattenedBindingTransformer<GetT, DependenciesT extends BindingDependencies = Record<string, never>> = (
+  bindingValues: ExtractBindingValueTypes<DependenciesT>,
+  bindings: DependenciesT
+) => ReadonlyBinding<GetT>;
 
 /** Use when a binding contains another binding, to listen to the second-level binding if either the first or second levels change */
-export const useFlattenedBinding = <GetT, NamedBindingsT extends Record<string, ReadonlyBinding | undefined> = Record<string, never>>(
-  bindings: SingleOrArray<ReadonlyBinding | undefined> | NamedBindingsT,
-  transformer: UseFlattenedBindingTransformer<GetT, NamedBindingsT>,
+export const useFlattenedBinding = <GetT, DependenciesT extends BindingDependencies = Record<string, never>>(
+  bindings: DependenciesT,
+  transformer: UseFlattenedBindingTransformer<GetT, DependenciesT>,
   {
     id,
     deps = [],
@@ -55,41 +50,28 @@ export const useFlattenedBinding = <GetT, NamedBindingsT extends Record<string, 
   const isMounted = useIsMountedRef();
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
-  const namedBindings = useStableValue(isNonNamedBindings ? undefined : bindings);
+  const namedBindings = useStableValue(isNonNamedBindings ? undefined : (bindings as NamedBindingDependencies));
   const namedBindingsKeys = namedBindings !== undefined ? getTypedKeys(namedBindings) : undefined;
 
-  const getNamedBindingValues = useCallbackRef(() => {
-    if (namedBindingsKeys === undefined || namedBindings === undefined) {
-      return emptyNamedBindingValues as ExtractNamedBindingsValues<NamedBindingsT>;
-    }
+  // Doesn't need to be stable since Refreshable will always get rendered with the latest anyway
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  const getDependencyValues = () => extractBindingDependencyValues<DependenciesT>({ bindings, namedBindingsKeys });
 
-    const namedBindingValues: Partial<ExtractNamedBindingsValues<NamedBindingsT>> = {};
-    for (const key of namedBindingsKeys) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      namedBindingValues[key] = namedBindings[key]?.get();
-    }
-
-    return namedBindingValues as ExtractNamedBindingsValues<NamedBindingsT>;
+  const internalBinding = useBinding(() => transformer(getDependencyValues(), bindings).get(), {
+    id,
+    areEqual: areOutputValuesEqual,
+    detectChanges: detectOutputChanges
   });
-
-  const internalBinding = useBinding(
-    () => transformer(getNamedBindingValues(), namedBindings ?? (emptyNamedBindingValues as NamedBindingsT)).get(),
-    {
-      id,
-      areEqual: areOutputValuesEqual,
-      detectChanges: detectOutputChanges
-    }
-  );
 
   const secondLevelBindingListenerRemover = useRef<(() => void) | undefined>(undefined);
 
   useBindingEffect(
     bindings,
-    (namedBindingValues) => {
+    (dependencyValues) => {
       secondLevelBindingListenerRemover.current?.();
       secondLevelBindingListenerRemover.current = undefined;
 
-      const secondLevelBinding = transformer(namedBindingValues, namedBindings ?? (emptyNamedBindingValues as NamedBindingsT));
+      const secondLevelBinding = transformer(dependencyValues, bindings);
       internalBinding.set(secondLevelBinding.get());
 
       if (isMounted.current) {
@@ -109,8 +91,7 @@ export const useFlattenedBinding = <GetT, NamedBindingsT extends Record<string, 
   );
 
   useEffect(() => {
-    const namedBindingValues = getNamedBindingValues();
-    const secondLevelBinding = transformer(namedBindingValues, namedBindings ?? (emptyNamedBindings as NamedBindingsT));
+    const secondLevelBinding = transformer(getDependencyValues(), bindings);
 
     secondLevelBindingListenerRemover.current = secondLevelBinding.addChangeListener(() => {
       internalBinding.set(secondLevelBinding.get());
