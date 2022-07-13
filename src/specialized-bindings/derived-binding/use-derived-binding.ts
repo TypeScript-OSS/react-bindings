@@ -1,5 +1,5 @@
 import type { BindingDependencies, NamedBindingDependencies } from '../../binding/types/binding-dependencies';
-import type { ExtractBindingValueTypes } from '../../binding/types/extract-binding-value-types';
+import type { InferBindingValueTypes } from '../../binding/types/infer-binding-value-types';
 import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
 import { useBinding } from '../../binding/use-binding';
 import { isBinding } from '../../binding-utils/type-utils';
@@ -22,7 +22,7 @@ const emptyDependencies = Object.freeze({});
  * @returns The derived value
  */
 export type UseDerivedBindingTransformer<GetT, DependenciesT extends BindingDependencies = Record<string, never>> = (
-  bindingValues: ExtractBindingValueTypes<DependenciesT>,
+  bindingValues: InferBindingValueTypes<DependenciesT>,
   bindings: DependenciesT
 ) => GetT;
 
@@ -55,7 +55,7 @@ export const useDerivedBinding = <GetT, DependenciesT extends BindingDependencie
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   const getDependencyValues = () => extractBindingDependencyValues<DependenciesT>({ bindings, namedBindingsKeys });
 
-  const measuredTransformer = useCallbackRef((dependencyValues: ExtractBindingValueTypes<DependenciesT> = getDependencyValues()) => {
+  const measuredTransformer = useCallbackRef((dependencyValues: InferBindingValueTypes<DependenciesT> = getDependencyValues()) => {
     const startMSec = performance.now();
     try {
       return transformer(dependencyValues, bindings ?? (emptyDependencies as DependenciesT));

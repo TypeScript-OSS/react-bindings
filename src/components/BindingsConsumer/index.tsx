@@ -1,7 +1,7 @@
 import { UI_PRIORITY } from 'client-run-queue';
 import React, { useRef } from 'react';
 
-import type { BindingDependencies, BindingsArrayDependencies, NamedBindingDependencies } from '../../binding/types/binding-dependencies';
+import type { BindingDependencies, BindingArrayDependencies, NamedBindingDependencies } from '../../binding/types/binding-dependencies';
 import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
 import { isBinding } from '../../binding-utils/type-utils';
 import { normalizeAsArray } from '../../internal-utils/array-like';
@@ -50,7 +50,7 @@ export const BindingsConsumer = <DependenciesT extends BindingDependencies = Rec
   const limiterOptions: LimiterOptions = { limitMode, limitMSec, limitType, priority, queue };
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
-  const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingsArrayDependencies) : undefined;
+  const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingArrayDependencies) : undefined;
   const namedBindings = isNonNamedBindings ? undefined : (bindings as NamedBindingDependencies);
   const namedBindingsKeys = namedBindings !== undefined ? getTypedKeys(namedBindings) : undefined;
   const allBindings = isNonNamedBindings ? normalizeAsArray(nonNamedBindings) : Object.values(namedBindings ?? emptyNamedBindings);

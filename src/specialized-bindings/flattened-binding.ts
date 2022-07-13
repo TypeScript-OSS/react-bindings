@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import type { BindingDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
-import type { ExtractBindingValueTypes } from '../binding/types/extract-binding-value-types';
+import type { InferBindingValueTypes } from '../binding/types/infer-binding-value-types';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
 import { useBinding } from '../binding/use-binding';
 import { isBinding } from '../binding-utils/type-utils';
@@ -23,7 +23,7 @@ const emptyDependencies = Object.freeze({});
  * @returns The second-level binding (i.e. a binding determined dynamically by executing this function)
  */
 export type UseFlattenedBindingTransformer<GetT, DependenciesT extends BindingDependencies = Record<string, never>> = (
-  bindingValues: ExtractBindingValueTypes<DependenciesT>,
+  bindingValues: InferBindingValueTypes<DependenciesT>,
   bindings: DependenciesT
 ) => ReadonlyBinding<GetT>;
 

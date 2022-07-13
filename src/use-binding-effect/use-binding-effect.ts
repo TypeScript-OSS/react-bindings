@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { useEffect, useRef } from 'react';
 
-import type { BindingDependencies, BindingsArrayDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
+import type { BindingDependencies, BindingArrayDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
 import type { ChangeListenerRemover } from '../binding/types/change-listener';
-import type { ExtractBindingValueTypes } from '../binding/types/extract-binding-value-types';
+import type { InferBindingValueTypes } from '../binding/types/infer-binding-value-types';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
 import { isBinding } from '../binding-utils/type-utils';
 import { areEqual } from '../config/are-equal';
@@ -26,7 +26,7 @@ const emptyDependencies = Object.freeze({} as EmptyObject);
  * @param bindings - The original named bindings if named bindings are used or an empty object otherwise.
  */
 export type UseBindingEffectCallback<DependenciesT extends BindingDependencies = Record<string, never>> = (
-  bindingValues: ExtractBindingValueTypes<DependenciesT>,
+  bindingValues: InferBindingValueTypes<DependenciesT>,
   bindings: DependenciesT
 ) => void;
 
@@ -59,7 +59,7 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
   const limiterOptions = { limitMode, limitMSec, limitType, priority, queue };
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
-  const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingsArrayDependencies) : undefined;
+  const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingArrayDependencies) : undefined;
   const namedBindings = isNonNamedBindings ? undefined : (bindings as NamedBindingDependencies);
   const namedBindingsKeys = namedBindings !== undefined ? getTypedKeys(namedBindings) : undefined;
   const stableAllBindings = useStableValue(

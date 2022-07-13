@@ -1,5 +1,5 @@
 import type { BindingDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
-import type { ExtractBindingValueTypes } from '../binding/types/extract-binding-value-types';
+import type { InferBindingValueTypes } from '../binding/types/infer-binding-value-types';
 import { isBinding } from '../binding-utils/type-utils';
 
 const emptyValues = Object.freeze({});
@@ -10,17 +10,17 @@ export const extractBindingDependencyValues = <DependenciesT extends BindingDepe
 }: {
   bindings: DependenciesT | undefined;
   namedBindingsKeys: string[] | undefined;
-}): ExtractBindingValueTypes<DependenciesT> => {
+}): InferBindingValueTypes<DependenciesT> => {
   const isBindingsArray = Array.isArray(bindings);
   const isNonNamedBindings = isBindingsArray || isBinding(bindings);
 
   if (isNonNamedBindings) {
     if (isBindingsArray) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return bindings.map((binding) => binding?.get()) as ExtractBindingValueTypes<DependenciesT>;
+      return bindings.map((binding) => binding?.get()) as InferBindingValueTypes<DependenciesT>;
     } else {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return bindings.get() as ExtractBindingValueTypes<DependenciesT>;
+      return bindings.get() as InferBindingValueTypes<DependenciesT>;
     }
   } else if (namedBindingsKeys !== undefined) {
     const namedBindingValues: Record<string, any> = {};
@@ -30,9 +30,9 @@ export const extractBindingDependencyValues = <DependenciesT extends BindingDepe
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return namedBindingValues as ExtractBindingValueTypes<DependenciesT>;
+    return namedBindingValues as InferBindingValueTypes<DependenciesT>;
   } else {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return emptyValues as ExtractBindingValueTypes<DependenciesT>;
+    return emptyValues as InferBindingValueTypes<DependenciesT>;
   }
 };

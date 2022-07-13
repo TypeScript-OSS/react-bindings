@@ -2,7 +2,7 @@ import React, { MutableRefObject, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import type { BindingDependencies } from '../../../binding/types/binding-dependencies';
-import type { ExtractBindingValueTypes } from '../../../binding/types/extract-binding-value-types';
+import type { InferBindingValueTypes } from '../../../binding/types/infer-binding-value-types';
 import { useIsMountedRef } from '../../../internal-hooks/use-is-mounted-ref';
 import type { BindingsConsumerRenderCallback } from '../types/render-callback';
 
@@ -16,7 +16,7 @@ export const Refreshable = <DependenciesT extends BindingDependencies = Record<s
 }: {
   cancelLastPendingRefresh: () => void;
   getDependencies: () => DependenciesT;
-  getDependencyValues: () => ExtractBindingValueTypes<DependenciesT>;
+  getDependencyValues: () => InferBindingValueTypes<DependenciesT>;
   refreshControls: MutableRefObject<{ refresh?: () => void }>;
   render: BindingsConsumerRenderCallback<DependenciesT>;
 }) => {
