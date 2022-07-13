@@ -2,6 +2,8 @@ import type { BindingDependencies, NamedBindingDependencies } from '../binding/t
 import type { ExtractBindingValueTypes } from '../binding/types/extract-binding-value-types';
 import { isBinding } from '../binding-utils/type-utils';
 
+const emptyValues = Object.freeze({});
+
 export const extractBindingDependencyValues = <DependenciesT extends BindingDependencies>({
   bindings,
   namedBindingsKeys
@@ -31,6 +33,6 @@ export const extractBindingDependencyValues = <DependenciesT extends BindingDepe
     return namedBindingValues as ExtractBindingValueTypes<DependenciesT>;
   } else {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return undefined as ExtractBindingValueTypes<DependenciesT>;
+    return emptyValues as ExtractBindingValueTypes<DependenciesT>;
   }
 };

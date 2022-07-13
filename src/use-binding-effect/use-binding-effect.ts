@@ -16,7 +16,7 @@ import { useLimiter } from '../limiter/use-limiter';
 import type { EmptyObject } from '../types/empty';
 import type { UseBindingEffectOptions } from './types/options';
 
-const emptyNamedBindings = Object.freeze({} as EmptyObject);
+const emptyDependencies = Object.freeze({} as EmptyObject);
 
 /**
  * Called when the associated bindings change, depending on the options provided to `useBindingEffect`.
@@ -39,7 +39,7 @@ export type UseBindingEffectCallback<DependenciesT extends BindingDependencies =
  * callback would have triggered a re-render that we, by other means, know to be unnecessary.
  */
 export const useBindingEffect = <DependenciesT extends BindingDependencies = Record<string, never>>(
-  bindings: DependenciesT,
+  bindings: DependenciesT | undefined,
   callback: UseBindingEffectCallback<DependenciesT>,
   {
     id,
@@ -63,7 +63,7 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
   const namedBindings = isNonNamedBindings ? undefined : (bindings as NamedBindingDependencies);
   const namedBindingsKeys = namedBindings !== undefined ? getTypedKeys(namedBindings) : undefined;
   const stableAllBindings = useStableValue(
-    isNonNamedBindings ? normalizeAsArray(nonNamedBindings) : Object.values(namedBindings ?? emptyNamedBindings)
+    isNonNamedBindings ? normalizeAsArray(nonNamedBindings) : Object.values(namedBindings ?? emptyDependencies)
   );
 
   // Doesn't need to be stable since always used in a callback ref
@@ -115,7 +115,7 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
       checkAndUpdateIfInputChanged();
     }
 
-    callback(getDependencyValues(), bindings);
+    callback(getDependencyValues(), bindings ?? (emptyDependencies as DependenciesT));
   });
 
   const performChecksAndTriggerCallbackIfNeeded = useCallbackRef(() => {

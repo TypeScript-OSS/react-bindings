@@ -11,4 +11,4 @@ export type ExtractBindingValueTypes<DependenciesT extends BindingDependencies> 
   ? ExtractNamedBindingsValues<DependenciesT>
   : DependenciesT extends BindingsArrayDependencies
   ? ExtractBindingsArrayValues<DependenciesT>
-  : void;
+  : Record<string, never>;
