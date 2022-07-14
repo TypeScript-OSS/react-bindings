@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import _ from 'lodash';
 
 let globalAreEqual = (a: any, b: any) => _.isEqual(a, b);

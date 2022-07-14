@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 let globalLogger: Logger = {};
 
 const globalSpecialLoggingEnabledFor: Partial<Record<SpecialLoggingType, boolean | undefined>> = {

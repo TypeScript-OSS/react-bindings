@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
 
 let globalStatsHandler: StatsHandler = {};
