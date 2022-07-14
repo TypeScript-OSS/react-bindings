@@ -1,6 +1,7 @@
+import { waitFor } from '@testing-library/react';
 import React, { ComponentType } from 'react';
 
-import { runInDom, sleep } from '../../../__test_dependency__';
+import { runInDom } from '../../../__test_dependency__';
 import type { Binding } from '../../../binding/types/binding';
 import { useBinding } from '../../../binding/use-binding';
 import { BindingsConsumer } from '..';
@@ -25,28 +26,20 @@ describe('BindingsConsumer', () => {
       onMount(async (rootElement) => {
         expect(MyComponent).toHaveBeenCalledTimes(1);
         expect(consumerRenderer).toHaveBeenCalledTimes(1);
-        expect(rootElement.innerHTML).toBe('<span>0</span>');
-
-        await sleep(300); // giving time to render
-
-        expect(MyComponent).toHaveBeenCalledTimes(1);
-        expect(consumerRenderer).toHaveBeenCalledTimes(1);
-        expect(rootElement.innerHTML).toBe('<span>0</span>');
+        expect(rootElement.innerHTML).toBe('<div><span>0</span></div>');
 
         for (let i = 1; i < 25; i += 1) {
           b.set(i);
-          await sleep(10);
 
           expect(MyComponent).toHaveBeenCalledTimes(1);
           expect(consumerRenderer).toHaveBeenCalledTimes(1);
-          expect(rootElement.innerHTML).toBe('<span>0</span>');
+          expect(rootElement.innerHTML).toBe('<div><span>0</span></div>');
         }
 
-        await sleep(300); // giving time to render
+        await waitFor(() => expect(rootElement.innerHTML).toBe('<div><span>24</span></div>'));
 
         expect(MyComponent).toHaveBeenCalledTimes(1);
         expect(consumerRenderer).toHaveBeenCalledTimes(2);
-        expect(rootElement.innerHTML).toBe('<span>24</span>');
       });
 
       return <MyComponent />;
@@ -71,35 +64,26 @@ describe('BindingsConsumer', () => {
       onMount(async (rootElement) => {
         expect(MyComponent).toHaveBeenCalledTimes(1);
         expect(consumerRenderer).toHaveBeenCalledTimes(1);
-        expect(rootElement.innerHTML).toBe('<span>0</span>');
-
-        await sleep(300); // giving time to render
-
-        expect(MyComponent).toHaveBeenCalledTimes(1);
-        expect(consumerRenderer).toHaveBeenCalledTimes(1);
-        expect(rootElement.innerHTML).toBe('<span>0</span>');
+        expect(rootElement.innerHTML).toBe('<div><span>0</span></div>');
 
         b.set(1);
-        await sleep(10);
+        await waitFor(() => expect(rootElement.innerHTML).toBe('<div><span>1</span></div>'));
 
         expect(MyComponent).toHaveBeenCalledTimes(1);
         expect(consumerRenderer).toHaveBeenCalledTimes(2);
-        expect(rootElement.innerHTML).toBe('<span>1</span>');
 
         for (let i = 2; i < 25; i += 1) {
           b.set(i);
-          await sleep(10);
 
           expect(MyComponent).toHaveBeenCalledTimes(1);
           expect(consumerRenderer).toHaveBeenCalledTimes(2);
-          expect(rootElement.innerHTML).toBe('<span>1</span>');
+          expect(rootElement.innerHTML).toBe('<div><span>1</span></div>');
         }
 
-        await sleep(300); // giving time to render
+        await waitFor(() => expect(rootElement.innerHTML).toBe('<div><span>24</span></div>'));
 
         expect(MyComponent).toHaveBeenCalledTimes(1);
         expect(consumerRenderer).toHaveBeenCalledTimes(3);
-        expect(rootElement.innerHTML).toBe('<span>24</span>');
       });
 
       return <MyComponent />;

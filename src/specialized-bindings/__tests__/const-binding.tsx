@@ -1,6 +1,7 @@
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 
-import { runInDom, sleep } from '../../__test_dependency__';
+import { runInDom } from '../../__test_dependency__';
 import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
 import { useBinding } from '../../binding/use-binding';
 import { BindingsConsumer } from '../../components/BindingsConsumer';
@@ -32,10 +33,8 @@ describe('useConstBinding', () => {
         expect(constBinding?.get()).toBe(0);
 
         value.set(1);
+        await waitFor(() => expect(constBinding?.get()).toBe(1));
 
-        await sleep(300); // giving time to render
-
-        expect(constBinding?.get()).toBe(1);
         expect(constBinding?.uid).toBe(constBindingUid);
       });
 

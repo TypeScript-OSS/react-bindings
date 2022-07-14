@@ -1,6 +1,7 @@
+import { act, waitFor } from '@testing-library/react';
 import React, { ComponentType, useState } from 'react';
 
-import { runInDom, sleep } from '../../__test_dependency__';
+import { runInDom } from '../../__test_dependency__';
 import { useBinding } from '../use-binding';
 
 describe('useBinding', () => {
@@ -35,18 +36,14 @@ describe('useBinding', () => {
         expect(MyComponent).toHaveBeenCalledTimes(1);
         expect(instanceNumber).toBe(1);
 
-        stateSetter(1);
-
-        await sleep(300); // giving time to render
+        act(() => stateSetter(1));
+        await waitFor(() => expect(instanceNumber).toBe(2));
 
         expect(MyComponent).toHaveBeenCalledTimes(2);
-        expect(instanceNumber).toBe(2);
 
-        stateSetter(1); // same state value again
+        act(() => stateSetter(1)); // same state value again
+        await waitFor(() => expect(MyComponent).toHaveBeenCalledTimes(3));
 
-        await sleep(300); // giving time to render
-
-        expect(MyComponent).toHaveBeenCalledTimes(3);
         expect(instanceNumber).toBe(2);
       });
 

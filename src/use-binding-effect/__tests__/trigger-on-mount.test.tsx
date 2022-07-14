@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { runInDom, sleep } from '../../__test_dependency__';
@@ -55,10 +56,7 @@ describe('useBindingEffect', () => {
         expect(callback).toHaveBeenCalledTimes(2);
 
         refreshValue.set(1);
-
-        await sleep(300); // giving time to render
-
-        expect(callback).toHaveBeenCalledTimes(3);
+        await waitFor(() => expect(callback).toHaveBeenCalledTimes(3));
       });
 
       return <BindingsConsumer bindings={refreshValue}>{() => <MyComponent />}</BindingsConsumer>;
@@ -83,16 +81,10 @@ describe('useBindingEffect', () => {
         expect(callback).toHaveBeenCalledTimes(1);
 
         b.set(1);
-
-        await sleep(50); // giving time for callback
-
-        expect(callback).toHaveBeenCalledTimes(2);
+        await waitFor(() => expect(callback).toHaveBeenCalledTimes(2));
 
         refreshValue.set(1);
-
-        await sleep(300); // giving time to render
-
-        expect(callback).toHaveBeenCalledTimes(2);
+        await expect(waitFor(() => expect(callback).not.toHaveBeenCalledTimes(2))).rejects.toThrow();
       });
 
       return <BindingsConsumer bindings={refreshValue}>{() => <MyComponent />}</BindingsConsumer>;

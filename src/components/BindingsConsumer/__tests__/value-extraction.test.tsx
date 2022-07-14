@@ -16,7 +16,7 @@ describe('BindingsConsumer', () => {
       onMount((rootElement) => {
         expect(MyComponent).toHaveBeenCalledTimes(1);
 
-        expect(rootElement.innerHTML).toBe('<span>0</span>');
+        expect(rootElement.innerHTML).toBe('<div><span>0</span></div>');
       });
 
       return <MyComponent />;
@@ -42,7 +42,7 @@ describe('BindingsConsumer', () => {
       onMount((rootElement) => {
         expect(MyComponent).toHaveBeenCalledTimes(1);
 
-        expect(rootElement.innerHTML).toBe('<span>0-hello</span>');
+        expect(rootElement.innerHTML).toBe('<div><span>0-hello</span></div>');
       });
 
       return <MyComponent />;
@@ -59,7 +59,7 @@ describe('BindingsConsumer', () => {
       onMount((rootElement) => {
         expect(MyComponent).toHaveBeenCalledTimes(1);
 
-        expect(rootElement.innerHTML).toBe('<span>0</span>');
+        expect(rootElement.innerHTML).toBe('<div><span>0</span></div>');
       });
 
       return <MyComponent />;
@@ -72,7 +72,7 @@ describe('BindingsConsumer', () => {
       onMount((rootElement) => {
         expect(MyComponent).toHaveBeenCalledTimes(1);
 
-        expect(rootElement.innerHTML).toBe('<span>working</span>');
+        expect(rootElement.innerHTML).toBe('<div><span>working</span></div>');
       });
 
       return <MyComponent />;
