@@ -137,9 +137,13 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
   }
 
   useEffect(() => {
+    const addedBindingUids = new Set<string>();
     const removers: ChangeListenerRemover[] = [];
     for (const b of stableAllBindings) {
-      if (b !== undefined) {
+      if (b !== undefined && !addedBindingUids.has(b.uid)) {
+        // Making sure we only listen for changes once per binding, even if the same binding is listed multiple times
+        addedBindingUids.add(b.uid);
+
         removers.push(b.addChangeListener(() => limiter.limit(performChecksAndTriggerCallbackIfNeeded)));
       }
     }
