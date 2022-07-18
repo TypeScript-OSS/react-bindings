@@ -1,4 +1,5 @@
 export class DoubleLinkedList<ItemT> {
+  private changeCount = 0;
   private firstNode: DoubleLinkedListNode<ItemT> | undefined;
   private lastNode: DoubleLinkedListNode<ItemT> | undefined;
   private length = 0;
@@ -9,6 +10,7 @@ export class DoubleLinkedList<ItemT> {
     }
   }
 
+  public readonly getChangeCount = () => this.changeCount;
   public readonly getLength = () => this.length;
   public readonly isEmpty = () => this.firstNode === undefined;
 
@@ -24,6 +26,7 @@ export class DoubleLinkedList<ItemT> {
       this.lastNode = newNode;
     }
 
+    this.changeCount += 1;
     this.length += 1;
 
     return newNode;
@@ -41,6 +44,7 @@ export class DoubleLinkedList<ItemT> {
       this.firstNode = newNode;
     }
 
+    this.changeCount += 1;
     this.length += 1;
 
     return newNode;
@@ -100,6 +104,7 @@ export class DoubleLinkedList<ItemT> {
     node.nextNode = undefined;
     node.list = undefined;
 
+    this.changeCount += 1;
     this.length -= 1;
 
     return true;

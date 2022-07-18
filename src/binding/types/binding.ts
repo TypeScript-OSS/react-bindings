@@ -19,4 +19,7 @@ export interface Binding<GetType = any> extends ReadonlyBinding<GetType> {
 
   /** If set, a function to transform the value before it's stored */
   readonly setValueTransformer?: SetValueTransformer<GetType>;
+
+  /** Forcibly triggers the change listeners.  Don't normally use this! */
+  readonly triggerChangeListeners: () => void;
 }

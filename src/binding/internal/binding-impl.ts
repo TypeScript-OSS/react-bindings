@@ -37,6 +37,10 @@ export class BindingImpl<GetType = any> implements Binding<GetType> {
   private changeUid_ = this.uid; // Using the binding's uid as the initial change ID for convenience
   /** Registered change listeners */
   private onChangeListeners_?: DoubleLinkedList<ChangeListener>;
+  /** The last changeCount from onChangeListeners_ that was used to generate lastChangeListenersArray_ */
+  private lastChangeListenersArrayChangeCount_ = 0;
+  /** The immutable array version of onChangeListeners_ */
+  private lastChangeListenersArray_: Readonly<ChangeListener[]> = emptyListenersList;
 
   /**
    * A flag indicating whether or not this binding was modified.  This is initially `false` when the binding is created and set to `true`
@@ -129,16 +133,12 @@ export class BindingImpl<GetType = any> implements Binding<GetType> {
     this.value_ = newValue;
     this.changeUid_ = makeUID();
 
-    // Using onChangeListeners.toArray() to clone in case onChangeListeners itself changes while handling these callbacks
-    const listeners = this.onChangeListeners_?.toArray() ?? emptyListenersList;
-    for (const listener of listeners) {
-      listener();
-    }
+    this.triggerChangeListeners();
 
     getStatsHandler().trackBindingDidSetRaw?.({
       binding: this,
       durationMSec: performance.now() - startMSec,
-      numListeners: listeners.length
+      numListeners: this.lastChangeListenersArray_.length
     });
   };
 
@@ -238,5 +238,19 @@ export class BindingImpl<GetType = any> implements Binding<GetType> {
       this.onChangeListeners_!.remove(newNode);
       newNode = undefined;
     };
+  };
+
+  public readonly triggerChangeListeners = () => {
+    const newCount = this.onChangeListeners_?.getChangeCount() ?? 0;
+    if (this.lastChangeListenersArrayChangeCount_ !== newCount) {
+      this.lastChangeListenersArrayChangeCount_ = newCount;
+      // Using onChangeListeners.toArray() to clone in case onChangeListeners itself changes while handling these callbacks
+      this.lastChangeListenersArray_ = this.onChangeListeners_?.toArray() ?? emptyListenersList;
+    }
+
+    const listeners = this.lastChangeListenersArray_;
+    for (const listener of listeners) {
+      listener();
+    }
   };
 }
