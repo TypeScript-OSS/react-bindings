@@ -62,7 +62,7 @@ describe('useBindingEffect', () => {
       return <BindingsConsumer bindings={refreshValue}>{() => <MyComponent />}</BindingsConsumer>;
     }));
 
-  it('with triggerOnMount=first, callback should be made only on the first mount -- or if the dependency values change', () =>
+  it('with triggerOnMount=first, callback should be made only on the first mount', () =>
     runInDom(({ onMount }) => {
       const b = useBinding(() => 0, { id: 'test' });
 
@@ -88,5 +88,36 @@ describe('useBindingEffect', () => {
       });
 
       return <BindingsConsumer bindings={refreshValue}>{() => <MyComponent />}</BindingsConsumer>;
+    }));
+
+  it('with triggerOnMount=first, callback should be made only on the first mount or if the dependency values change', () =>
+    runInDom(({ onMount }) => {
+      const b = useBinding(() => 0, { id: 'test' });
+
+      const callback = jest.fn(({ b: _b }: { b: number }) => {});
+
+      const refreshValue = useBinding(() => 0, { id: 'refreshValue' });
+      const MyComponent = ({ value }: { value: number }) => {
+        useBindingEffect({ b }, callback, { triggerOnMount: 'first', deps: [value] });
+
+        return <></>;
+      };
+
+      onMount(async () => {
+        await sleep(50); // giving time for callback
+
+        expect(callback).toHaveBeenCalledTimes(1);
+
+        b.set(1);
+        await waitFor(() => expect(callback).toHaveBeenCalledTimes(2));
+
+        refreshValue.set(1);
+        await expect(waitFor(() => expect(callback).not.toHaveBeenCalledTimes(2))).rejects.toThrow();
+
+        b.set(2);
+        await waitFor(() => expect(callback).toHaveBeenCalledTimes(3));
+      });
+
+      return <BindingsConsumer bindings={refreshValue}>{(refreshValue) => <MyComponent value={refreshValue} />}</BindingsConsumer>;
     }));
 });
