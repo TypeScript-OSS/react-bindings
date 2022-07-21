@@ -8,6 +8,7 @@ import type { ReadonlyBinding } from '../binding/types/readonly-binding';
 import { isBinding } from '../binding-utils/type-utils';
 import { areEqual } from '../config/are-equal';
 import { useCallbackRef } from '../internal-hooks/use-callback-ref';
+import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
 import { useStableValue } from '../internal-hooks/use-stable-value';
 import { normalizeAsArray } from '../internal-utils/array-like';
 import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
@@ -58,6 +59,8 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
 ): (() => void) => {
   const limiterOptions = { limitMode, limitMSec, limitType, priority, queue };
 
+  const isMounted = useIsMountedRef();
+
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
   const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingArrayDependencies) : undefined;
   const namedBindings = isNonNamedBindings ? undefined : (bindings as NamedBindingDependencies);
@@ -71,7 +74,7 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
   const getDependencyValues = () => extractBindingDependencyValues<DependenciesT>({ bindings, namedBindingsKeys });
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  makeComparableInputValue = makeComparableInputValue ?? (() => [getDependencyValues(), deps]);
+  makeComparableInputValue = makeComparableInputValue ?? getDependencyValues;
   const lastComparableInputValue = useRef(
     detectInputChanges && (triggerOnMount === false || triggerOnMount === 'if-input-changed') ? makeComparableInputValue() : undefined
   );
@@ -157,17 +160,34 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
   }, [limiter, performChecksAndTriggerCallbackIfNeeded, stableAllBindings]);
 
   const isFirstMount = useRef(true);
+  const triggerOnNextMount = useRef(false);
   useEffect(() => {
     if (
       triggerOnMount === true ||
+      triggerOnNextMount.current ||
       (isFirstMount.current && triggerOnMount === 'first') ||
       (triggerOnMount === 'if-input-changed' && checkAndUpdateIfInputChanged())
     ) {
+      triggerOnNextMount.current = false;
+
       limiter.cancel();
       triggerCallback(true);
     }
     isFirstMount.current = false;
   });
+
+  // If the deps changed,
+  const lastDepsValue = useRef(deps);
+  if (!areEqual(lastDepsValue.current, deps)) {
+    lastDepsValue.current = deps;
+
+    if (isMounted.current) {
+      limiter.cancel();
+      triggerCallback(true);
+    } else {
+      triggerOnNextMount.current = true;
+    }
+  }
 
   // If the upcoming callback is canceled, it's because we have already dealt with the input in a different way, so we need to update the
   // tracking info to make sure we don't reprocess the same thing later
