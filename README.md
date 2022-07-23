@@ -162,6 +162,8 @@ react-bindings is maintained by the team at [Passfolio](https://www.passfolio.co
 
 [API Docs](https://passfolio.github.io/react-bindings/)
 
+Be sure to check out our other [Open Source @ Passfolio](https://github.com/Passfolio) projects as well.
+
 <!-- Definitions -->
 
 [downloads-badge]: https://img.shields.io/npm/dm/react-bindings.svg
