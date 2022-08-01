@@ -16,7 +16,7 @@ export type BindingsConsumerProps<DependenciesT extends BindingDependencies = Re
    * bindings are changed.  If the values are equal, the transformer won't be run.  If they're unequal, the transformer will be run.
    * - If `false` – old and new values aren't compared and the transformer will always be run any time the bindings change.
    *
-   * @defaultValue `true`
+   * @defaultValue `false`
    */
   detectInputChanges?: boolean;
   /**

@@ -25,7 +25,7 @@ export interface UseBindingEffectOptions extends LimiterOptions {
    * run.
    * - If `false` – old and new values aren't compared, the transformer will always be run.
    *
-   * @defaultValue `true`
+   * @defaultValue `false`
    */
   detectInputChanges?: boolean;
   /**
