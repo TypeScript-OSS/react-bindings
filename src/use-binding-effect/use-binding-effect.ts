@@ -8,7 +8,6 @@ import type { ReadonlyBinding } from '../binding/types/readonly-binding';
 import { isBinding } from '../binding-utils/type-utils';
 import { areEqual } from '../config/are-equal';
 import { useCallbackRef } from '../internal-hooks/use-callback-ref';
-import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
 import { useStableValue } from '../internal-hooks/use-stable-value';
 import { normalizeAsArray } from '../internal-utils/array-like';
 import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
@@ -58,8 +57,6 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
   }: UseBindingEffectOptions = {}
 ): (() => void) => {
   const limiterOptions = { limitMode, limitMSec, limitType, priority, queue };
-
-  const isMounted = useIsMountedRef();
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
   const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingArrayDependencies) : undefined;
@@ -112,7 +109,12 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
     }
   });
 
+  const isFirstRender = useRef(true);
+  const needsTrigger = useRef(false);
+
   const triggerCallback = useCallbackRef((needsInputChangeTrackingUpdate: boolean) => {
+    needsTrigger.current = false;
+
     if (needsInputChangeTrackingUpdate) {
       // We don't care about the result here -- just want to update the tracking
       checkAndUpdateIfInputChanged();
@@ -122,15 +124,18 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
   });
 
   const performChecksAndTriggerCallbackIfNeeded = useCallbackRef(() => {
-    const didChange = checkAndUpdateIfInputChanged();
-    if (detectInputChanges && !didChange) {
-      return; // No change
-    }
+    if (needsTrigger.current) {
+      triggerCallback(true);
+    } else {
+      const didChange = checkAndUpdateIfInputChanged();
+      if (detectInputChanges && !didChange) {
+        return; // No change
+      }
 
-    triggerCallback(false);
+      triggerCallback(false);
+    }
   });
 
-  const isFirstRender = useRef(true);
   if (isFirstRender.current) {
     isFirstRender.current = false;
 
@@ -160,18 +165,15 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
   }, [limiter, performChecksAndTriggerCallbackIfNeeded, stableAllBindings]);
 
   const isFirstMount = useRef(true);
-  const triggerOnNextMount = useRef(false);
   useEffect(() => {
     if (
+      needsTrigger.current ||
       triggerOnMount === true ||
-      triggerOnNextMount.current ||
       (isFirstMount.current && triggerOnMount === 'first') ||
       (triggerOnMount === 'if-input-changed' && checkAndUpdateIfInputChanged())
     ) {
-      triggerOnNextMount.current = false;
-
-      limiter.cancel();
-      triggerCallback(true);
+      needsTrigger.current = true;
+      limiter.limit(() => triggerCallback(true));
     }
     isFirstMount.current = false;
   });
@@ -181,18 +183,15 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies = Rec
   if (!areEqual(lastDepsValue.current, deps)) {
     lastDepsValue.current = deps;
 
-    if (isMounted.current) {
-      limiter.cancel();
-      triggerCallback(true);
-    } else {
-      triggerOnNextMount.current = true;
-    }
+    needsTrigger.current = true;
+    limiter.limit(() => triggerCallback(true));
   }
 
-  // If the upcoming callback is canceled, it's because we have already dealt with the input in a different way, so we need to update the
+  // If the upcoming callback is canceled, it's assumed we have already dealt with the input in a different way, so we need to update the
   // tracking info to make sure we don't reprocess the same thing later
   return () => {
     limiter.cancel();
+    needsTrigger.current = false;
     // We don't care about the result here -- just want to update the tracking
     checkAndUpdateIfInputChanged();
   };

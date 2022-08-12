@@ -7,16 +7,17 @@ describe('useLimiter', () => {
       const limiter = useLimiter({ id: 'test' });
 
       onMount(async () => {
-        const callback = jest.fn();
-        limiter.limit(callback);
-        limiter.limit(callback);
-        limiter.limit(callback);
-        limiter.limit(callback);
-        limiter.limit(callback);
+        const callback = jest.fn((_value) => {});
+        limiter.limit(() => callback(0));
+        limiter.limit(() => callback(1));
+        limiter.limit(() => callback(2));
+        limiter.limit(() => callback(3));
+        limiter.limit(() => callback(4));
 
         await sleep(50); // giving time for limiter
 
         expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenLastCalledWith(4);
       });
     }));
 

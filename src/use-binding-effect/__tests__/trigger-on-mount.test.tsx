@@ -90,13 +90,13 @@ describe('useBindingEffect', () => {
       return <BindingsConsumer bindings={refreshValue}>{() => <MyComponent />}</BindingsConsumer>;
     }));
 
-  it('with triggerOnMount=first, callback should be made only on the first mount or if the dependency values change', () =>
+  it('with deps, callback should be made only on the first mount or if the dependency values change', () =>
     runInDom(({ onMount }) => {
       const callback = jest.fn(() => {});
 
       const refreshValue = useBinding(() => 0, { id: 'refreshValue' });
       const MyComponent = ({ value }: { value: number }) => {
-        useBindingEffect(undefined, callback, { deps: [value] });
+        useBindingEffect(undefined, callback, { deps: [value], limitType: 'none' });
 
         return <></>;
       };
