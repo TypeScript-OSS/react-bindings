@@ -3,6 +3,22 @@ import { useBinding } from '../../../binding/use-binding';
 import { useDerivedBinding } from '../use-derived-binding';
 
 describe('useDerivedBinding', () => {
+  it('should work with undefined bindings', () =>
+    runInDom(({ onMount }) => {
+      const derived = useDerivedBinding(
+        undefined,
+        (values) => {
+          expect(values).toBeUndefined();
+          return 1;
+        },
+        { id: 'a' }
+      );
+
+      onMount(() => {
+        expect(derived.get()).toBe(1);
+      });
+    }));
+
   it('initial value should work with named bindings', () =>
     runInDom(({ onMount }) => {
       const a = useBinding(() => 0, { id: 'a' });

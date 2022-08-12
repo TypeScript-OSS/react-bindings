@@ -7,6 +7,26 @@ import { useBinding } from '../../../binding/use-binding';
 import { BindingsConsumer } from '..';
 
 describe('BindingsConsumer', () => {
+  it('should work with undefined bindings', () =>
+    runInDom(({ onMount }) => {
+      const MyComponent: ComponentType = jest.fn(() => (
+        <BindingsConsumer bindings={undefined}>
+          {(values) => {
+            expect(values).toBeUndefined();
+            return <span />;
+          }}
+        </BindingsConsumer>
+      ));
+
+      onMount((rootElement) => {
+        expect(MyComponent).toHaveBeenCalledTimes(1);
+
+        expect(rootElement.innerHTML).toBe('<div><span></span></div>');
+      });
+
+      return <MyComponent />;
+    }));
+
   it('initial render should work', () =>
     runInDom(({ onMount }) => {
       const MyComponent: ComponentType = jest.fn(() => {
