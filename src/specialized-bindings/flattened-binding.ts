@@ -12,8 +12,6 @@ import { getTypedKeys } from '../internal-utils/get-typed-keys';
 import { useBindingEffect } from '../use-binding-effect/use-binding-effect';
 import type { DerivedBindingOptions } from './derived-binding/options';
 
-const emptyDependencies = Object.freeze({});
-
 /**
  * Called to extract the second-level binding on the initial render and anytime the dependencies change.
  *
@@ -59,7 +57,7 @@ export const useFlattenedBinding = <GetT, DependenciesT extends BindingDependenc
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   const getDependencyValues = () => extractBindingDependencyValues<DependenciesT>({ bindings, namedBindingsKeys });
 
-  const internalBinding = useBinding(() => transformer(getDependencyValues(), bindings ?? (emptyDependencies as DependenciesT)).get(), {
+  const internalBinding = useBinding(() => transformer(getDependencyValues(), bindings ?? (undefined as any as DependenciesT)).get(), {
     id,
     areEqual: areOutputValuesEqual,
     detectChanges: detectOutputChanges
@@ -73,7 +71,7 @@ export const useFlattenedBinding = <GetT, DependenciesT extends BindingDependenc
       secondLevelBindingListenerRemover.current?.();
       secondLevelBindingListenerRemover.current = undefined;
 
-      const secondLevelBinding = transformer(dependencyValues, bindings ?? (emptyDependencies as DependenciesT));
+      const secondLevelBinding = transformer(dependencyValues, bindings ?? (undefined as any as DependenciesT));
       internalBinding.set(secondLevelBinding.get());
 
       if (isMounted.current) {
@@ -93,7 +91,7 @@ export const useFlattenedBinding = <GetT, DependenciesT extends BindingDependenc
   );
 
   useEffect(() => {
-    const secondLevelBinding = transformer(getDependencyValues(), bindings ?? (emptyDependencies as DependenciesT));
+    const secondLevelBinding = transformer(getDependencyValues(), bindings ?? (undefined as any as DependenciesT));
 
     secondLevelBindingListenerRemover.current = secondLevelBinding.addChangeListener(() => {
       internalBinding.set(secondLevelBinding.get());

@@ -3,7 +3,7 @@ import { extractBindingDependencyValues } from '../extract-binding-dependency-va
 
 describe('extractBindingDependencyValues', () => {
   it('undefined bindings should work', () => {
-    expect(extractBindingDependencyValues({ bindings: undefined, namedBindingsKeys: undefined })).toMatchObject({});
+    expect(extractBindingDependencyValues({ bindings: undefined, namedBindingsKeys: undefined })).toBeUndefined();
   });
 
   it('single bindings should work', () => {

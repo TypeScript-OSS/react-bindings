@@ -11,8 +11,6 @@ import type { LimiterOptions } from '../../limiter/options';
 import { useBindingEffect } from '../../use-binding-effect/use-binding-effect';
 import type { DerivedBindingOptions } from './options';
 
-const emptyDependencies = Object.freeze({});
-
 /**
  * Called to compute the derived value on the initial render and anytime the dependencies change.
  *
@@ -58,7 +56,7 @@ export const useDerivedBinding = <GetT, DependenciesT extends BindingDependencie
   const measuredTransformer = useCallbackRef((dependencyValues: InferBindingValueTypes<DependenciesT> = getDependencyValues()) => {
     const startMSec = performance.now();
     try {
-      return transformer(dependencyValues, bindings ?? (emptyDependencies as DependenciesT));
+      return transformer(dependencyValues, bindings ?? (undefined as any as DependenciesT));
     } finally {
       getStatsHandler().trackDerivedBindingTransformerDidRun?.({ id, durationMSec: performance.now() - startMSec });
     }
