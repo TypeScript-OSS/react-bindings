@@ -31,7 +31,7 @@ const emptyNamedBindings = Object.freeze({} as EmptyObject);
  * <BindingsConsumer>
  * ```
  */
-export const BindingsConsumer = <DependenciesT extends BindingDependencies = Record<string, never>>({
+export const BindingsConsumer = <DependenciesT extends BindingDependencies>({
   children,
   // BindingsConsumerProps
   bindings,

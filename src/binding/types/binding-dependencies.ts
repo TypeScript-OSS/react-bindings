@@ -4,4 +4,4 @@ export type BindingArrayDependencies = Array<ReadonlyBinding | undefined> | [Rea
 
 export type NamedBindingDependencies = Record<string, ReadonlyBinding | undefined>;
 
-export type BindingDependencies = ReadonlyBinding | BindingArrayDependencies | NamedBindingDependencies;
+export type BindingDependencies = ReadonlyBinding | BindingArrayDependencies | NamedBindingDependencies | undefined;

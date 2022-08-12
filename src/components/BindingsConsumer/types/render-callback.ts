@@ -9,7 +9,7 @@ import type { InferBindingValueTypes } from '../../../binding/types/infer-bindin
  * @param bindingValues - The extracted values of the associated bindings.
  * @param bindings - The original dependencies.
  */
-export type BindingsConsumerRenderCallback<DependenciesT extends BindingDependencies = Record<string, never>> = (
+export type BindingsConsumerRenderCallback<DependenciesT extends BindingDependencies> = (
   bindingValues: InferBindingValueTypes<DependenciesT>,
   bindings: DependenciesT
 ) => ReactNode;

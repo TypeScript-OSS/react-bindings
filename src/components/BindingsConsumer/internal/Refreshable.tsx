@@ -7,7 +7,7 @@ import { useIsMountedRef } from '../../../internal-hooks/use-is-mounted-ref';
 import type { BindingsConsumerRenderCallback } from '../types/render-callback';
 
 /** A component that returns a refresh method that can be used to manually rerender */
-export const Refreshable = <DependenciesT extends BindingDependencies = Record<string, never>>({
+export const Refreshable = <DependenciesT extends BindingDependencies>({
   cancelLastPendingRefresh,
   getDependencies,
   getDependencyValues,

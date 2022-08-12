@@ -20,13 +20,13 @@ import type { DerivedBindingOptions } from './derived-binding/options';
  *
  * @returns The second-level binding (i.e. a binding determined dynamically by executing this function)
  */
-export type UseFlattenedBindingTransformer<GetT, DependenciesT extends BindingDependencies = Record<string, never>> = (
+export type UseFlattenedBindingTransformer<GetT, DependenciesT extends BindingDependencies> = (
   bindingValues: InferBindingValueTypes<DependenciesT>,
   bindings: DependenciesT
 ) => ReadonlyBinding<GetT>;
 
 /** Use when a binding contains another binding, to listen to the second-level binding if either the first or second levels change */
-export const useFlattenedBinding = <GetT, DependenciesT extends BindingDependencies = Record<string, never>>(
+export const useFlattenedBinding = <GetT, DependenciesT extends BindingDependencies>(
   bindings: DependenciesT | undefined,
   transformer: UseFlattenedBindingTransformer<GetT, DependenciesT>,
   {

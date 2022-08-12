@@ -25,7 +25,7 @@ const emptyDependencies = Object.freeze({} as EmptyObject);
  * object.
  * @param bindings - The original named bindings if named bindings are used or an empty object otherwise.
  */
-export type UseBindingEffectCallback<DependenciesT extends BindingDependencies = Record<string, never>> = (
+export type UseBindingEffectCallback<DependenciesT extends BindingDependencies> = (
   bindingValues: InferBindingValueTypes<DependenciesT>,
   bindings: DependenciesT
 ) => void;
@@ -38,7 +38,7 @@ export type UseBindingEffectCallback<DependenciesT extends BindingDependencies =
  * @returns a function that can be called anytime to cancel the most recent limited callback.  This is useful, for example, if the the
  * callback would have triggered a re-render that we, by other means, know to be unnecessary.
  */
-export const useBindingEffect = <DependenciesT extends BindingDependencies = Record<string, never>>(
+export const useBindingEffect = <DependenciesT extends BindingDependencies>(
   bindings: DependenciesT | undefined,
   callback: UseBindingEffectCallback<DependenciesT>,
   {

@@ -19,13 +19,13 @@ import type { DerivedBindingOptions } from './options';
  *
  * @returns The derived value
  */
-export type UseDerivedBindingTransformer<GetT, DependenciesT extends BindingDependencies = Record<string, never>> = (
+export type UseDerivedBindingTransformer<GetT, DependenciesT extends BindingDependencies> = (
   bindingValues: InferBindingValueTypes<DependenciesT>,
   bindings: DependenciesT
 ) => GetT;
 
 /** A derived binding is a binding derived from zero or more other bindings */
-export const useDerivedBinding = <GetT, DependenciesT extends BindingDependencies = Record<string, never>>(
+export const useDerivedBinding = <GetT, DependenciesT extends BindingDependencies>(
   bindings: DependenciesT | undefined,
   transformer: UseDerivedBindingTransformer<GetT, DependenciesT>,
   {
