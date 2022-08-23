@@ -3,12 +3,9 @@ import { DoubleLinkedList } from '..';
 describe('DoubleLinkedList', () => {
   it('initializing with values should work', () => {
     const list = new DoubleLinkedList<number>(1, 2, 3);
-    expect(list.getChangeCount()).toBe(3);
     list.append(4);
     list.append(5);
-    expect(list.getChangeCount()).toBe(5);
     const node3 = list.append(6);
-    expect(list.getChangeCount()).toBe(6);
     expect(list.getLength()).toEqual(6);
     expect(list.getHead()?.value).toEqual(1);
     expect(list.getTail()).toBe(node3);
@@ -32,11 +29,9 @@ describe('DoubleLinkedList', () => {
 
   it('prepending should work', () => {
     const list = new DoubleLinkedList<number>();
-    expect(list.getChangeCount()).toBe(0);
     const node3 = list.prepend(3);
     const node2 = list.prepend(2);
     const node1 = list.prepend(1);
-    expect(list.getChangeCount()).toBe(3);
     expect(list.getLength()).toEqual(3);
     expect(list.getHead()).toBe(node1);
     expect(list.getTail()).toBe(node3);
@@ -50,13 +45,10 @@ describe('DoubleLinkedList', () => {
 
   it('remove head should work', () => {
     const list = new DoubleLinkedList<number>();
-    expect(list.getChangeCount()).toBe(0);
     const node1 = list.append(1);
     const node2 = list.append(2);
     const node3 = list.append(3);
-    expect(list.getChangeCount()).toBe(3);
     list.remove(node1);
-    expect(list.getChangeCount()).toBe(4);
     expect(list.getLength()).toEqual(2);
     expect(list.getHead()).toBe(node2);
     expect(list.getTail()).toBe(node3);

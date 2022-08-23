@@ -1,5 +1,7 @@
 export class DoubleLinkedList<ItemT> {
-  private changeCount = 0;
+  /** This is set to `undefined` on any list mutations and rebuilt when `toArray` is called if needed */
+  private allValues: Readonly<ItemT[]> | undefined;
+
   private firstNode: DoubleLinkedListNode<ItemT> | undefined;
   private lastNode: DoubleLinkedListNode<ItemT> | undefined;
   private length = 0;
@@ -10,7 +12,6 @@ export class DoubleLinkedList<ItemT> {
     }
   }
 
-  public readonly getChangeCount = () => this.changeCount;
   public readonly getLength = () => this.length;
   public readonly isEmpty = () => this.firstNode === undefined;
 
@@ -26,7 +27,7 @@ export class DoubleLinkedList<ItemT> {
       this.lastNode = newNode;
     }
 
-    this.changeCount += 1;
+    this.allValues = undefined;
     this.length += 1;
 
     return newNode;
@@ -44,7 +45,7 @@ export class DoubleLinkedList<ItemT> {
       this.firstNode = newNode;
     }
 
-    this.changeCount += 1;
+    this.allValues = undefined;
     this.length += 1;
 
     return newNode;
@@ -59,13 +60,19 @@ export class DoubleLinkedList<ItemT> {
   public readonly getHead = (): Readonly<DoubleLinkedListNode<ItemT>> | undefined => this.firstNode;
   public readonly getTail = (): Readonly<DoubleLinkedListNode<ItemT>> | undefined => this.lastNode;
 
-  public readonly toArray = (): ItemT[] => {
+  public readonly toArray = (): Readonly<ItemT[]> => {
+    if (this.allValues !== undefined) {
+      return this.allValues;
+    }
+
     const output: ItemT[] = [];
     let cursor = this.firstNode;
     while (cursor !== undefined) {
       output.push(cursor.value);
       cursor = cursor.nextNode;
     }
+
+    this.allValues = Object.freeze(output);
 
     return output;
   };
@@ -104,7 +111,7 @@ export class DoubleLinkedList<ItemT> {
     node.nextNode = undefined;
     node.list = undefined;
 
-    this.changeCount += 1;
+    this.allValues = undefined;
     this.length -= 1;
 
     return true;
@@ -114,7 +121,7 @@ export class DoubleLinkedList<ItemT> {
 export class DoubleLinkedListNode<ItemT> {
   constructor(
     public list: DoubleLinkedList<ItemT> | undefined,
-    public value: ItemT,
+    public readonly value: ItemT,
     public previousNode?: DoubleLinkedListNode<ItemT>,
     public nextNode?: DoubleLinkedListNode<ItemT>
   ) {}

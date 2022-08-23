@@ -16,8 +16,6 @@ type PendingUpdate<GetType = any> =
   | { type: 'set'; value: GetType }
   | { type: 'reset'; value?: undefined };
 
-const emptyListenersList: readonly ChangeListener[] = Object.freeze([]);
-
 /** The standard implementation of a read-write binding */
 export class BindingImpl<GetType = any> implements Binding<GetType> {
   // Public Fields
@@ -37,10 +35,6 @@ export class BindingImpl<GetType = any> implements Binding<GetType> {
   private changeUid_ = this.uid; // Using the binding's uid as the initial change ID for convenience
   /** Registered change listeners */
   private onChangeListeners_?: DoubleLinkedList<ChangeListener>;
-  /** The last changeCount from onChangeListeners_ that was used to generate lastChangeListenersArray_ */
-  private lastChangeListenersArrayChangeCount_ = 0;
-  /** The immutable array version of onChangeListeners_ */
-  private lastChangeListenersArray_: Readonly<ChangeListener[]> = emptyListenersList;
 
   /**
    * A flag indicating whether or not this binding was modified.  This is initially `false` when the binding is created and set to `true`
@@ -133,12 +127,12 @@ export class BindingImpl<GetType = any> implements Binding<GetType> {
     this.value_ = newValue;
     this.changeUid_ = makeUID();
 
-    this.triggerChangeListeners();
+    const numListeners = this.triggerChangeListeners();
 
     getStatsHandler().trackBindingDidSetRaw?.({
       binding: this,
       durationMSec: performance.now() - startMSec,
-      numListeners: this.lastChangeListenersArray_.length
+      numListeners
     });
   };
 
@@ -241,16 +235,15 @@ export class BindingImpl<GetType = any> implements Binding<GetType> {
   };
 
   public readonly triggerChangeListeners = () => {
-    const newCount = this.onChangeListeners_?.getChangeCount() ?? 0;
-    if (this.lastChangeListenersArrayChangeCount_ !== newCount) {
-      this.lastChangeListenersArrayChangeCount_ = newCount;
-      // Using onChangeListeners.toArray() to clone in case onChangeListeners itself changes while handling these callbacks
-      this.lastChangeListenersArray_ = this.onChangeListeners_?.toArray() ?? emptyListenersList;
+    if (this.onChangeListeners_ === undefined) {
+      return 0;
     }
 
-    const listeners = this.lastChangeListenersArray_;
+    const listeners = this.onChangeListeners_.toArray();
     for (const listener of listeners) {
       listener();
     }
+
+    return listeners?.length;
   };
 }
