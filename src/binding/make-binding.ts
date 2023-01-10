@@ -7,7 +7,7 @@ import type { MakeBindingArgs } from './types/binding-args';
 import type { BindingInitializer } from './types/binding-initializer';
 
 /** Makes a binding without using any React contexts. */
-export const makeBinding = <GetType = any, ExtraFieldsT = EmptyObject>(
+export const makeBinding = <GetType = any, ExtraFieldsT extends object = EmptyObject>(
   initialValue: BindingInitializer<GetType>,
   args: MakeBindingArgs<GetType, ExtraFieldsT>
 ): Binding<GetType> & ExtraFieldsT => {

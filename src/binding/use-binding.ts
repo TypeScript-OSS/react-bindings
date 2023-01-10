@@ -9,7 +9,7 @@ import type { BindingInitializer } from './types/binding-initializer';
 const emptyDeps: DependencyList = Object.freeze([]);
 
 /** Makes a binding memo'd using the specified dependencies */
-export const useBinding = <GetType = any, ExtraFieldsT = EmptyObject>(
+export const useBinding = <GetType = any, ExtraFieldsT extends object = EmptyObject>(
   initialValue: BindingInitializer<GetType>,
   args: UseBindingArgs<GetType, ExtraFieldsT>
 ): // eslint-disable-next-line react-hooks/exhaustive-deps

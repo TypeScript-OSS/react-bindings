@@ -37,13 +37,13 @@ export interface BindingConstructorArgs<GetType = any> {
 }
 
 /** The post-initializer arguments that are passed to `makeBinding` */
-export interface MakeBindingArgs<GetType = any, ExtraFieldsT = EmptyObject> extends BindingConstructorArgs<GetType> {
+export interface MakeBindingArgs<GetType = any, ExtraFieldsT extends object = EmptyObject> extends BindingConstructorArgs<GetType> {
   /** Use to support injecting additional fields into bindings */
   addFields?: (thisBinding: Binding<GetType>) => ExtraFieldsT;
 }
 
 /** The post-initializer arguments that are passed to `useBinding` */
-export interface UseBindingArgs<GetType = any, ExtraFieldsT = EmptyObject> extends MakeBindingArgs<GetType, ExtraFieldsT> {
+export interface UseBindingArgs<GetType = any, ExtraFieldsT extends object = EmptyObject> extends MakeBindingArgs<GetType, ExtraFieldsT> {
   /** Hook dependencies */
   deps?: DependencyList;
 }
