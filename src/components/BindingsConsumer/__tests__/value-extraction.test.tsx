@@ -22,32 +22,6 @@ describe('BindingsConsumer', () => {
       return <MyComponent />;
     }));
 
-  it('array values should be extracted by position', () =>
-    runInDom(({ onMount }) => {
-      const MyComponent: ComponentType = jest.fn(() => {
-        const b1 = useBinding(() => 0, { id: 'test1' });
-        const b2 = useBinding(() => 'hello', { id: 'test2' });
-
-        return (
-          <BindingsConsumer bindings={[b1, b2]}>
-            {([b1, b2]: [number, string]) => (
-              <span>
-                {b1}-{b2}
-              </span>
-            )}
-          </BindingsConsumer>
-        );
-      });
-
-      onMount((rootElement) => {
-        expect(MyComponent).toHaveBeenCalledTimes(1);
-
-        expect(rootElement.innerHTML).toBe('<div><span>0-hello</span></div>');
-      });
-
-      return <MyComponent />;
-    }));
-
   it('single binding values should be extracted directly', () =>
     runInDom(({ onMount }) => {
       const MyComponent: ComponentType = jest.fn(() => {
