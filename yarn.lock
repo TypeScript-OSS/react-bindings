@@ -1409,10 +1409,10 @@ cli-spinners@^2.5.0:
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.7.0.tgz#f815fd30b5f9eaac02db604c7a231ed7cb2f797a"
   integrity sha512-qu3pN8Y3qHNgE2AFweciB1IfMnmZ/fsNTEE+NOFjmGB2F/7rLhnhzppvpCnN4FovtP26k8lHyy9ptEbNwWFLzw==
 
-client-run-queue@^1.1.11:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/client-run-queue/-/client-run-queue-1.1.11.tgz#2c208f30d885cf0dd35de2b3be41b331658772f9"
-  integrity sha512-0B2O0JdFgESnbukZyFl/Oah5YvU36/Ep8Q+x7mmY6TOioswR/mwd+r+xuI6XTfpVop4cgFd/Xcjff3vqb9a4Ow==
+client-run-queue@^1.1.12:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/client-run-queue/-/client-run-queue-1.1.12.tgz#b9cb0b89b1354252bc30479236d8a0b955bdb479"
+  integrity sha512-I2eS0QLhCfxq0k8tDE5idRY+zMaUHAgTqnCkBVYqHnwF5m9Gkut7S80b8hbjw+Rxqp7aljFdCdZQnPlZTi0mPA==
   dependencies:
     heap "^0.2.7"
 
