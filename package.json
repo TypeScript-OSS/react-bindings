@@ -1,6 +1,6 @@
 {
   "name": "react-bindings",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Data bindings for React",
   "keywords": [
     "bindings",
@@ -33,7 +33,7 @@
     "react-dom": ">=16.9.0"
   },
   "dependencies": {
-    "client-run-queue": "^2.0.0",
+    "client-run-queue": "^2.0.1",
     "is-promise": "^4.0.0",
     "lodash": "^4.17.21"
   },
