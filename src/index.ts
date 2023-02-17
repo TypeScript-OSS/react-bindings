@@ -6,5 +6,6 @@ export * from './default-queue/exports';
 export * from './limiter/exports';
 export * from './resolveable/exports';
 export * from './specialized-bindings/exports';
+export * from './synchronization/exports';
 export * from './types/exports';
 export * from './use-binding-effect/exports';
