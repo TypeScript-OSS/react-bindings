@@ -4,11 +4,11 @@ import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
 import { useBinding } from '../../binding/use-binding';
 import { isBinding } from '../../binding-utils/type-utils';
 import { getStatsHandler } from '../../config/stats-handler';
-import { useCallbackRef } from '../../internal-hooks/use-callback-ref';
 import { extractBindingDependencyValues } from '../../internal-utils/extract-binding-dependency-values';
 import { getTypedKeys } from '../../internal-utils/get-typed-keys';
 import type { LimiterOptions } from '../../limiter/options';
 import { useBindingEffect } from '../../use-binding-effect/use-binding-effect';
+import { useCallbackRef } from '../../utility-hooks/use-callback-ref';
 import type { DerivedBindingOptions } from './options';
 
 /**

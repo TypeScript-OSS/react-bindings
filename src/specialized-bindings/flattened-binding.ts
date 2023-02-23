@@ -6,10 +6,10 @@ import type { ReadonlyBinding } from '../binding/types/readonly-binding';
 import { useBinding } from '../binding/use-binding';
 import { isBinding } from '../binding-utils/type-utils';
 import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
-import { useStableValue } from '../internal-hooks/use-stable-value';
 import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
 import { getTypedKeys } from '../internal-utils/get-typed-keys';
 import { useBindingEffect } from '../use-binding-effect/use-binding-effect';
+import { useStableValue } from '../utility-hooks/use-stable-value';
 import type { DerivedBindingOptions } from './derived-binding/options';
 
 /**

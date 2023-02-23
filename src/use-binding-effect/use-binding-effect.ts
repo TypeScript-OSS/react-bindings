@@ -7,13 +7,13 @@ import type { InferBindingValueTypes } from '../binding/types/infer-binding-valu
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
 import { isBinding } from '../binding-utils/type-utils';
 import { areEqual } from '../config/are-equal';
-import { useCallbackRef } from '../internal-hooks/use-callback-ref';
-import { useStableValue } from '../internal-hooks/use-stable-value';
 import { normalizeAsArray } from '../internal-utils/array-like';
 import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
 import { getTypedKeys } from '../internal-utils/get-typed-keys';
 import { useLimiter } from '../limiter/use-limiter';
 import type { EmptyObject } from '../types/empty';
+import { useCallbackRef } from '../utility-hooks/use-callback-ref';
+import { useStableValue } from '../utility-hooks/use-stable-value';
 import type { UseBindingEffectOptions } from './types/options';
 
 const emptyDependencies = Object.freeze({} as EmptyObject);
