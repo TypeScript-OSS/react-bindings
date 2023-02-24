@@ -1,4 +1,5 @@
-import { DependencyList, useMemo } from 'react';
+import type { DependencyList } from 'react';
+import { useMemo } from 'react';
 
 import type { EmptyObject } from '../types/empty';
 import { makeBinding } from './make-binding';

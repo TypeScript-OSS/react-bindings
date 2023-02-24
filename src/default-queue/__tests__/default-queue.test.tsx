@@ -1,4 +1,4 @@
-import { RunQueue } from 'client-run-queue';
+import type { RunQueue } from 'client-run-queue';
 import React from 'react';
 
 import { runInDom } from '../../__test_dependency__';

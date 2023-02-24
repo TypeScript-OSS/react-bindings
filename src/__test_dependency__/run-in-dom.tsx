@@ -1,7 +1,8 @@
 /* istanbul ignore file */
 
 import { render } from '@testing-library/react';
-import React, { ComponentType, ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
+import React from 'react';
 
 type OnMountHandler = (rootElement: HTMLElement) => void | Promise<void>;
 type OnUnmountHandler = () => void | Promise<void>;

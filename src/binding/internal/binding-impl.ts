@@ -8,7 +8,8 @@ import type { BindingInitializer } from '../types/binding-initializer';
 import type { ChangeListener } from '../types/change-listener';
 import type { SetValueTransformer } from '../types/set-value-transformer';
 import { LOCK_DURATION_WARNING_INTERVAL_MSEC } from './consts';
-import { DoubleLinkedList, DoubleLinkedListNode } from './DoubleLinkedList';
+import type { DoubleLinkedListNode } from './DoubleLinkedList';
+import { DoubleLinkedList } from './DoubleLinkedList';
 
 /** A pending update on a binding */
 type PendingUpdate<GetType = any> =

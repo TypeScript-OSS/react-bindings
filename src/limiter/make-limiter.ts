@@ -1,5 +1,7 @@
-import { DEFAULT_PRIORITY, RunQueue, RunQueueEntry } from 'client-run-queue';
-import _, { DebouncedFunc } from 'lodash';
+import type { RunQueue, RunQueueEntry } from 'client-run-queue';
+import { DEFAULT_PRIORITY } from 'client-run-queue';
+import type { DebouncedFunc } from 'lodash';
+import _ from 'lodash';
 
 import type { LimiterOptions, LimitMode } from './options';
 

@@ -1,5 +1,6 @@
 import { waitFor } from '@testing-library/react';
-import React, { ComponentType } from 'react';
+import type { ComponentType } from 'react';
+import React from 'react';
 
 import { runInDom } from '../../../__test_dependency__';
 import { useBinding } from '../../../binding/use-binding';

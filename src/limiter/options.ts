@@ -1,4 +1,4 @@
-import { RunQueue } from 'client-run-queue';
+import type { RunQueue } from 'client-run-queue';
 
 /**
  * The method for limiting.

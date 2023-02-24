@@ -1,4 +1,5 @@
-import React, { DependencyList, useRef } from 'react';
+import type { DependencyList } from 'react';
+import React, { useRef } from 'react';
 
 const noDeps: DependencyList = Object.freeze([]);
 

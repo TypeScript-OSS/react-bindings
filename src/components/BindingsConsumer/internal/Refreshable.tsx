@@ -1,4 +1,5 @@
-import React, { MutableRefObject, useState } from 'react';
+import type { MutableRefObject } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import type { BindingDependencies } from '../../../binding/types/binding-dependencies';
