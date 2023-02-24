@@ -158,8 +158,6 @@ export const MyComponent = () => {
 
 Thanks for checking it out.  Feel free to create issues or otherwise provide feedback.
 
-react-bindings is maintained by the team at [Passfolio](https://www.passfolio.com).
-
 [API Docs](https://passfolio.github.io/react-bindings/)
 
 Be sure to check out our other [Open Source @ Passfolio](https://github.com/Passfolio) projects as well.
