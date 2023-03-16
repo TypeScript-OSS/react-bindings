@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.9.1] - 2023-03-16
+
+- Pointing to new home at TypeScript OSS.
+
 ## [1.9.0] - 2023-02-23
 
 - Exposed two, previously internal-only, utility hooks: `useCallbackRef` and `useStableValue`, which are generally useful in React development.
