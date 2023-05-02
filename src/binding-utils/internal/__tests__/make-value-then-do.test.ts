@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 import { sleep } from '../../../__test_dependency__';
 import { makeValueThenDo } from '../make-value-then-do';
 

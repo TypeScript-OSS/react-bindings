@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 import { runInDom, sleep } from '../../__test_dependency__';
 import { useLimiter } from '../use-limiter';
 

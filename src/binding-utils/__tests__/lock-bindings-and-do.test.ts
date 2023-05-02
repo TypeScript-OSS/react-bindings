@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 import { sleep } from '../../__test_dependency__';
 import { makeBinding } from '../../binding/make-binding';
 import { lockBindingsAndDo } from '../lock-utils';

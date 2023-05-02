@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { act, waitFor } from '@testing-library/react';
 import type { ComponentType } from 'react';
 import React, { useState } from 'react';

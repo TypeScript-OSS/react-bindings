@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import type { ComponentType } from 'react';
 import React from 'react';
 

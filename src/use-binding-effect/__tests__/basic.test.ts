@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { waitFor } from '@testing-library/react';
 
 import { runInDom, sleep } from '../../__test_dependency__';
