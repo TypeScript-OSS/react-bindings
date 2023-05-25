@@ -21,7 +21,7 @@ const emptyNamedBindings = Object.freeze({} as EmptyObject);
 export const makeTransientDerivedBinding = <GetT, DependenciesT extends BindingDependencies>(
   bindings: DependenciesT | undefined,
   transformer: UseDerivedBindingTransformer<GetT, DependenciesT>,
-  { id }: TransientDerivedBindingOptions
+  { id }: TransientDerivedBindingOptions = {}
 ): ReadonlyBinding<GetT> => {
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
   const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingArrayDependencies) : undefined;
@@ -32,17 +32,19 @@ export const makeTransientDerivedBinding = <GetT, DependenciesT extends BindingD
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   const getDependencyValues = () => extractBindingDependencyValues<DependenciesT>({ bindings, namedBindingsKeys });
 
+  const uid = makeUID();
+
   return {
     isBinding: true,
-    id,
-    uid: makeUID(),
+    id: id ?? uid,
+    uid,
     addChangeListener: (listener) => {
       const removers = allBindings.map((b) => b?.addChangeListener(listener));
 
       let alreadyRemoved = false;
       return () => {
         if (alreadyRemoved) {
-          getLogger().debug?.(`A change listener for binding ${id} was removed more than once`);
+          getLogger().debug?.(`A change listener for binding ${id ?? uid} was removed more than once`);
           return;
         }
         alreadyRemoved = true;
