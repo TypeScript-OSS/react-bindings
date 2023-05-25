@@ -4,6 +4,7 @@ export * from './components/exports';
 export * from './config/exports';
 export * from './default-queue/exports';
 export * from './limiter/exports';
+export * from './make-bindable-component/exports';
 export * from './resolveable/exports';
 export * from './specialized-bindings/exports';
 export * from './synchronization/exports';
