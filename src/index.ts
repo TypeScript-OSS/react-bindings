@@ -1,3 +1,4 @@
+export * from './bc/exports';
 export * from './binding/exports';
 export * from './binding-utils/exports';
 export * from './components/exports';
