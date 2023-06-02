@@ -74,7 +74,7 @@ export const useFlattenedBinding = <GetT, DependenciesT extends BindingDependenc
       const secondLevelBinding = transformer(dependencyValues, bindings ?? (undefined as any as DependenciesT));
       internalBinding.set(secondLevelBinding.get());
 
-      if (isMounted.current) {
+      if (isMounted.current ?? false) {
         secondLevelBindingListenerRemover.current = secondLevelBinding.addChangeListener(() => {
           internalBinding.set(secondLevelBinding.get());
         });

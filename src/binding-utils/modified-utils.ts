@@ -10,7 +10,7 @@ import type { ReadonlyBinding } from '../binding/types/readonly-binding';
  */
 export const areAnyBindingsModified = (bindings: Array<ReadonlyBinding | undefined>) => {
   for (const binding of bindings) {
-    if (binding?.isModified()) {
+    if (binding?.isModified() ?? false) {
       return true;
     }
   }

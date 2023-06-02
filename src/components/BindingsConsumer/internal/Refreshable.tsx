@@ -27,7 +27,7 @@ export const Refreshable = <DependenciesT extends BindingDependencies>({
 
   // Immediately refreshes (using ReactDOM.unstable_batchedUpdates) if mounted
   refreshControls.current.refresh = () => {
-    if (isMounted.current) {
+    if (isMounted.current ?? false) {
       ReactDOM.unstable_batchedUpdates(() => setRefreshId(refreshId + 1));
     }
   };

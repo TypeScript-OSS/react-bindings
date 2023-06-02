@@ -10,7 +10,7 @@ import { makeValueThenDo } from './internal/make-value-then-do';
  */
 export const areAnyBindingsLocked = (bindings: Array<ReadonlyBinding | undefined>) => {
   for (const binding of bindings) {
-    if (binding?.isLocked()) {
+    if (binding?.isLocked() ?? false) {
       return true;
     }
   }
