@@ -65,6 +65,9 @@ const getAllBindings = (obj: Record<string, any>, passThru: Set<string>) => {
 const resolveBindings = <PropsT extends Record<string, any>>(props: PropsT, passThru: Set<string>): PropsT =>
   Object.entries(props).reduce((out, [key, value]) => {
     if (passThru.has(key)) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      out[key as keyof PropsT] = value;
+
       return out;
     }
 
