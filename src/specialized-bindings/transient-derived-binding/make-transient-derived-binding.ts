@@ -8,7 +8,7 @@ import { getTypedKeys } from '../../internal-utils/get-typed-keys';
 import { makeUID } from '../../internal-utils/uid';
 import type { EmptyObject } from '../../types/empty';
 import type { UseDerivedBindingTransformer } from '../derived-binding/use-derived-binding';
-import type { TransientDerivedBindingOptions } from './options';
+import type { MakeTransientDerivedBindingArgs } from './types/transient-derived-binding-args';
 
 const emptyNamedBindings = Object.freeze({} as EmptyObject);
 
@@ -21,7 +21,7 @@ const emptyNamedBindings = Object.freeze({} as EmptyObject);
 export const makeTransientDerivedBinding = <GetT, DependenciesT extends BindingDependencies>(
   bindings: DependenciesT | undefined,
   transformer: UseDerivedBindingTransformer<GetT, DependenciesT>,
-  { id }: TransientDerivedBindingOptions = {}
+  { id }: MakeTransientDerivedBindingArgs = {}
 ): ReadonlyBinding<GetT> => {
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
   const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingArrayDependencies) : undefined;
