@@ -1,6 +1,6 @@
 {
   "name": "react-bindings",
-  "version": "1.14.1",
+  "version": "1.15.0-alpha.0",
   "description": "Data bindings for React",
   "keywords": [
     "bindings",

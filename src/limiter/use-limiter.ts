@@ -2,17 +2,11 @@ import { DEFAULT_PRIORITY } from 'client-run-queue';
 import { useEffect, useMemo, useRef } from 'react';
 
 import { useDefaultQueue } from '../default-queue/default-queue-context';
-import { makeLimiter } from './make-limiter';
-import type { LimiterOptions } from './options';
+import { LimiterImpl } from './internal/LimiterImpl';
+import type { Limiter } from './types/Limiter';
+import type { LimiterOptions } from './types/LimiterOptions';
 
 const noOp = () => {};
-
-export interface Limiter {
-  /** Cancels any outstanding function calls and scheduled queue entries */
-  cancel: () => void;
-  /** Runs or schedules the specified function.  The specified function replaces any previous function used with this limiter */
-  limit: (run: () => void) => void;
-}
 
 /** Creates a limiter which can be used to debounce or throttle a function call. */
 export const useLimiter = ({
@@ -39,7 +33,7 @@ export const useLimiter = ({
 
   const previousLimiter = useRef<Limiter | undefined>();
   const limiter = useMemo<Limiter>(
-    () => makeLimiter({ id, limitMSec, limitMode, limitType, priority, queue: queue! }),
+    () => new LimiterImpl(id, { limitMSec, limitMode, limitType, priority, queue: queue! }),
     [id, limitMSec, limitMode, limitType, priority, queue]
   );
 
@@ -50,9 +44,9 @@ export const useLimiter = ({
   previousLimiter.current = limiter;
 
   const unmountCleanup = useRef(noOp);
-  unmountCleanup.current = cancelOnUnmount ? limiter.cancel : noOp;
+  unmountCleanup.current = cancelOnUnmount ? () => limiter.cancel() : noOp;
 
-  useEffect(() => () => unmountCleanup.current());
+  useEffect(() => (cancelOnUnmount ? () => unmountCleanup.current() : undefined));
 
   return limiter;
 };

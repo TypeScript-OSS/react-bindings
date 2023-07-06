@@ -17,7 +17,7 @@
 <h1>Function useBindingEffect</h1></div>
 <section class="tsd-panel">
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="useBindingEffect"><span class="tsd-kind-call-signature">use<wbr/>Binding<wbr/>Effect</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">DependenciesT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">bindings</span>, <span class="tsd-kind-parameter">callback</span>, <span class="tsd-kind-parameter">__namedParameters</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><a href="#useBindingEffect" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icon-anchor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path></g></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="useBindingEffect"><span class="tsd-kind-call-signature">use<wbr/>Binding<wbr/>Effect</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">DependenciesT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">bindings</span>, <span class="tsd-kind-parameter">callback</span>, <span class="tsd-kind-parameter">options</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><a href="#useBindingEffect" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icon-anchor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path></g></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Calls the specified callback function any time any of the specified bindings are changed.</p>
 <p>Most of the time you should use this hook rather than addChangeListener.</p>
@@ -35,7 +35,7 @@
 <li>
 <h5><span class="tsd-kind-parameter">callback</span>: <a href="../types/UseBindingEffectCallback.html" class="tsd-signature-type tsd-kind-type-alias">UseBindingEffectCallback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">DependenciesT</span><span class="tsd-signature-symbol">&gt;</span></h5></li>
 <li>
-<h5><span class="tsd-kind-parameter">__namedParameters</span>: <a href="../interfaces/UseBindingEffectOptions.html" class="tsd-signature-type tsd-kind-interface">UseBindingEffectOptions</a><span class="tsd-signature-symbol"> = {}</span></h5></li></ul></div>
+<h5><span class="tsd-kind-parameter">options</span>: <a href="../interfaces/UseBindingEffectOptions.html" class="tsd-signature-type tsd-kind-interface">UseBindingEffectOptions</a><span class="tsd-signature-symbol"> = {}</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></h4><p>a function that can be called anytime to cancel the most recent limited callback.  This is useful, for example, if the the
 callback would have triggered a re-render that we, by other means, know to be unnecessary.</p>
 
@@ -47,7 +47,7 @@ callback would have triggered a re-render that we, by other means, know to be un
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></li></ul>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/TypeScript-OSS/react-bindings/blob/2699d9f/src/use-binding-effect/use-binding-effect.ts#L41">src/use-binding-effect/use-binding-effect.ts:41</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/TypeScript-OSS/react-bindings/blob/1c8f951/src/use-binding-effect/use-binding-effect.ts#L41">src/use-binding-effect/use-binding-effect.ts:41</a></li></ul></aside></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -129,6 +129,7 @@ callback would have triggered a re-render that we, by other means, know to be un
 <li><a href="makeConstBinding.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>make<wbr/>Const<wbr/>Binding</span></a></li>
 <li><a href="makeLimiter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>make<wbr/>Limiter</span></a></li>
 <li><a href="makeTransientDerivedBinding.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>make<wbr/>Transient<wbr/>Derived<wbr/>Binding</span></a></li>
+<li><a href="pickLimiterOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>pick<wbr/>Limiter<wbr/>Options</span></a></li>
 <li><a href="resolveTypeOrBindingType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>resolve<wbr/>Type<wbr/>Or<wbr/>Binding<wbr/>Type</span></a></li>
 <li><a href="resolveTypeOrDeferredType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>resolve<wbr/>Type<wbr/>Or<wbr/>Deferred<wbr/>Type</span></a></li>
 <li><a href="resolveTypeOrDeferredTypeOrBindingType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>resolve<wbr/>Type<wbr/>Or<wbr/>Deferred<wbr/>Type<wbr/>Or<wbr/>Binding<wbr/>Type</span></a></li>

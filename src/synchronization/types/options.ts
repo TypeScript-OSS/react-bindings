@@ -1,6 +1,6 @@
 import type { DependencyList } from 'react';
 
-import type { LimiterOptions } from '../../limiter/options';
+import type { LimiterOptions } from '../../limiter/types/LimiterOptions';
 
 export interface UseBindingSyncOptions extends LimiterOptions {
   /** A technical but human-readable ID */

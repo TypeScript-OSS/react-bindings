@@ -1,5 +1,5 @@
 import type { BindingDependencies } from '../../../binding/types/binding-dependencies';
-import type { LimiterOptions } from '../../../limiter/options';
+import type { LimiterOptions } from '../../../limiter/types/LimiterOptions';
 
 export type BindingsConsumerProps<DependenciesT extends BindingDependencies> = LimiterOptions & {
   /** Bindings that cause the consumer to rerender.  Undefined values are ignored */

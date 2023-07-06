@@ -1,5 +1,3 @@
-import type { RunQueue } from 'client-run-queue';
-
 /**
  * The method for limiting.
  *
@@ -31,44 +29,3 @@ import type { RunQueue } from 'client-run-queue';
  * - with both leading and trailing edge throttling, the function is run like `x--x--x--x--x`
  */
 export type LimitType = 'none' | 'debounce' | 'throttle';
-
-/**
- * The limiter mode
- *
- * @see `LimiterType`
- */
-export type LimitMode = 'leading' | 'trailing' | 'leading-and-trailing';
-
-export interface LimiterOptions {
-  /**
-   * The limiter mode
-   *
-   * @defaultValue `'trailing'`
-   */
-  limitMode?: LimitMode;
-  /**
-   * The duration to debounce/throttle for
-   *
-   * @defaultValue `0`
-   */
-  limitMSec?: number;
-  /**
-   * The type of limiter
-   *
-   * @defaultValue `'debounce'`
-   */
-  limitType?: LimitType;
-
-  /**
-   * The priority
-   *
-   * @defaultValue `DEFAULT_PRIORITY` (`0`)
-   */
-  priority?: number;
-  /**
-   * The queue
-   *
-   * @defaultValue result of `useDefaultQueue()`
-   */
-  queue?: RunQueue;
-}

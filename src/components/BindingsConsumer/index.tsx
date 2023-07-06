@@ -1,22 +1,17 @@
 import { UI_PRIORITY } from 'client-run-queue';
 import React, { useRef } from 'react';
 
-import type { BindingArrayDependencies, BindingDependencies, NamedBindingDependencies } from '../../binding/types/binding-dependencies';
-import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
+import type { BindingDependencies, NamedBindingDependencies } from '../../binding/types/binding-dependencies';
 import { isBinding } from '../../binding-utils/type-utils';
-import { normalizeAsArray } from '../../internal-utils/array-like';
 import { extractBindingDependencyValues } from '../../internal-utils/extract-binding-dependency-values';
 import { getTypedKeys } from '../../internal-utils/get-typed-keys';
 import { pickLimiterOptions } from '../../limiter/pick-limiter-options';
-import type { EmptyObject } from '../../types/empty';
 import { useBindingEffect } from '../../use-binding-effect/use-binding-effect';
 import { Refreshable } from './internal/Refreshable';
 import type { BindingsConsumerProps } from './types/props';
 import type { BindingsConsumerRenderCallback } from './types/render-callback';
 
 export * from './types/exports';
-
-const emptyNamedBindings = Object.freeze({} as EmptyObject);
 
 /**
  * A component that is rerendered based on input binding changes.
@@ -51,10 +46,8 @@ export const BindingsConsumer = <DependenciesT extends BindingDependencies>(
   }
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
-  const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingArrayDependencies) : undefined;
   const namedBindings = isNonNamedBindings ? undefined : (bindings as NamedBindingDependencies);
   const namedBindingsKeys = namedBindings !== undefined ? getTypedKeys(namedBindings) : undefined;
-  const allBindings = isNonNamedBindings ? normalizeAsArray(nonNamedBindings) : Object.values(namedBindings ?? emptyNamedBindings);
 
   // Doesn't need to be stable since Refreshable will always get rendered with the latest anyway
   const getDependencies = () => bindings as DependenciesT;
@@ -65,7 +58,7 @@ export const BindingsConsumer = <DependenciesT extends BindingDependencies>(
 
   const refreshControls = useRef<{ refresh?: () => void }>({});
 
-  const cancelLastPendingRefresh = useBindingEffect(allBindings, () => refreshControls.current.refresh?.(), {
+  const cancelLastPendingRefresh = useBindingEffect(bindings, () => refreshControls.current.refresh?.(), {
     areInputValuesEqual,
     detectInputChanges,
     makeComparableInputValue,
