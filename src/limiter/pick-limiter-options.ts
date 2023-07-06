@@ -1,6 +1,6 @@
 import type { LimiterOptions } from './types/LimiterOptions';
 
-export const pickLimiterOptions = <T extends LimiterOptions>(value: T): LimiterOptions => ({
+export const pickLimiterOptions = (value: LimiterOptions): LimiterOptions => ({
   limitMode: value.limitMode,
   limitMSec: value.limitMSec,
   limitType: value.limitType,
