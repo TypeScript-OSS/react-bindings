@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { useEffect, useRef } from 'react';
 
 import type { BindingArrayDependencies, BindingDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
@@ -10,6 +9,7 @@ import { areEqual } from '../config/are-equal';
 import { normalizeAsArray } from '../internal-utils/array-like';
 import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
 import { getTypedKeys } from '../internal-utils/get-typed-keys';
+import { pickLimiterOptions } from '../limiter/pick-limiter-options';
 import { useLimiter } from '../limiter/use-limiter';
 import type { EmptyObject } from '../types/empty';
 import { useCallbackRef } from '../utility-hooks/use-callback-ref';
@@ -41,22 +41,18 @@ export type UseBindingEffectCallback<DependenciesT extends BindingDependencies> 
 export const useBindingEffect = <DependenciesT extends BindingDependencies>(
   bindings: DependenciesT | undefined,
   callback: UseBindingEffectCallback<DependenciesT>,
-  {
+  options: UseBindingEffectOptions = {}
+): (() => void) => {
+  const {
     id,
     deps,
     areInputValuesEqual = areEqual,
     detectInputChanges = false,
     makeComparableInputValue,
-    triggerOnMount = 'if-input-changed',
-    // LimiterOptions
-    limitMode,
-    limitMSec,
-    limitType,
-    priority,
-    queue
-  }: UseBindingEffectOptions = {}
-): (() => void) => {
-  const limiterOptions = { limitMode, limitMSec, limitType, priority, queue };
+    triggerOnMount = 'if-input-changed'
+  } = options;
+
+  const limiterOptions = pickLimiterOptions(options);
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
   const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingArrayDependencies) : undefined;
@@ -71,9 +67,9 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies>(
   const getDependencyValues = () => extractBindingDependencyValues<DependenciesT>({ bindings, namedBindingsKeys });
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  makeComparableInputValue = makeComparableInputValue ?? getDependencyValues;
+  const comparableInputValueMaker = makeComparableInputValue ?? getDependencyValues;
   const lastComparableInputValue = useRef(
-    detectInputChanges && (triggerOnMount === false || triggerOnMount === 'if-input-changed') ? makeComparableInputValue() : undefined
+    detectInputChanges && (triggerOnMount === false || triggerOnMount === 'if-input-changed') ? comparableInputValueMaker() : undefined
   );
 
   /** Only used when `detectInputChanges` is `false` and `triggerOnMount` is `'if-input-changed'` */
@@ -88,7 +84,7 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies>(
   const checkAndUpdateIfInputChanged = useCallbackRef(() => {
     if (detectInputChanges) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const nextComparableInputValue = makeComparableInputValue!();
+      const nextComparableInputValue = comparableInputValueMaker!();
       if (areInputValuesEqual(lastComparableInputValue.current, nextComparableInputValue)) {
         return false;
       }

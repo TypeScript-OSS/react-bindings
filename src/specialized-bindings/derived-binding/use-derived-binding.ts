@@ -6,7 +6,7 @@ import { isBinding } from '../../binding-utils/type-utils';
 import { getStatsHandler } from '../../config/stats-handler';
 import { extractBindingDependencyValues } from '../../internal-utils/extract-binding-dependency-values';
 import { getTypedKeys } from '../../internal-utils/get-typed-keys';
-import type { LimiterOptions } from '../../limiter/options';
+import { pickLimiterOptions } from '../../limiter/pick-limiter-options';
 import { useBindingEffect } from '../../use-binding-effect/use-binding-effect';
 import { useCallbackRef } from '../../utility-hooks/use-callback-ref';
 import type { DerivedBindingOptions } from './options';
@@ -28,22 +28,19 @@ export type UseDerivedBindingTransformer<GetT, DependenciesT extends BindingDepe
 export const useDerivedBinding = <GetT, DependenciesT extends BindingDependencies>(
   bindings: DependenciesT | undefined,
   transformer: UseDerivedBindingTransformer<GetT, DependenciesT>,
-  {
+  options: DerivedBindingOptions<GetT>
+): ReadonlyBinding<GetT> => {
+  const {
     id,
     deps,
     areInputValuesEqual,
     detectInputChanges = true,
     makeComparableInputValue,
     areOutputValuesEqual,
-    detectOutputChanges = true,
-    limitMode,
-    limitMSec,
-    limitType,
-    priority,
-    queue
-  }: DerivedBindingOptions<GetT>
-): ReadonlyBinding<GetT> => {
-  const limiterOptions: LimiterOptions = { limitMode, limitMSec, limitType, priority, queue };
+    detectOutputChanges = true
+  } = options;
+
+  const limiterOptions = pickLimiterOptions(options);
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
   const namedBindings = isNonNamedBindings ? undefined : (bindings as NamedBindingDependencies);

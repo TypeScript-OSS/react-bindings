@@ -7,7 +7,7 @@ import { isBinding } from '../../binding-utils/type-utils';
 import { normalizeAsArray } from '../../internal-utils/array-like';
 import { extractBindingDependencyValues } from '../../internal-utils/extract-binding-dependency-values';
 import { getTypedKeys } from '../../internal-utils/get-typed-keys';
-import type { LimiterOptions } from '../../limiter/options';
+import { pickLimiterOptions } from '../../limiter/pick-limiter-options';
 import type { EmptyObject } from '../../types/empty';
 import { useBindingEffect } from '../../use-binding-effect/use-binding-effect';
 import { Refreshable } from './internal/Refreshable';
@@ -31,23 +31,24 @@ const emptyNamedBindings = Object.freeze({} as EmptyObject);
  * <BindingsConsumer>
  * ```
  */
-export const BindingsConsumer = <DependenciesT extends BindingDependencies>({
-  children,
-  // BindingsConsumerProps
-  bindings,
-  areInputValuesEqual,
-  detectInputChanges = false,
-  makeComparableInputValue,
-  // LimiterOptions
-  limitMode,
-  limitMSec,
-  limitType,
-  priority = UI_PRIORITY,
-  queue
-}: BindingsConsumerProps<DependenciesT> & {
-  children: BindingsConsumerRenderCallback<DependenciesT>;
-}) => {
-  const limiterOptions: LimiterOptions = { limitMode, limitMSec, limitType, priority, queue };
+export const BindingsConsumer = <DependenciesT extends BindingDependencies>(
+  props: BindingsConsumerProps<DependenciesT> & {
+    children: BindingsConsumerRenderCallback<DependenciesT>;
+  }
+) => {
+  const {
+    children,
+    // BindingsConsumerProps
+    bindings,
+    areInputValuesEqual,
+    detectInputChanges = false,
+    makeComparableInputValue
+  } = props;
+
+  const limiterOptions = pickLimiterOptions(props);
+  if (limiterOptions.priority === undefined) {
+    limiterOptions.priority = UI_PRIORITY;
+  }
 
   const isNonNamedBindings = Array.isArray(bindings) || isBinding(bindings);
   const nonNamedBindings = isNonNamedBindings ? (bindings as ReadonlyBinding | BindingArrayDependencies) : undefined;

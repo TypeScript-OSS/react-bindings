@@ -8,6 +8,7 @@ import { isBinding } from '../binding-utils/type-utils';
 import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
 import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
 import { getTypedKeys } from '../internal-utils/get-typed-keys';
+import { pickLimiterOptions } from '../limiter/pick-limiter-options';
 import { useBindingEffect } from '../use-binding-effect/use-binding-effect';
 import { useStableValue } from '../utility-hooks/use-stable-value';
 import type { DerivedBindingOptions } from './derived-binding/options';
@@ -29,23 +30,19 @@ export type UseFlattenedBindingTransformer<GetT, DependenciesT extends BindingDe
 export const useFlattenedBinding = <GetT, DependenciesT extends BindingDependencies>(
   bindings: DependenciesT | undefined,
   transformer: UseFlattenedBindingTransformer<GetT, DependenciesT>,
-  {
+  options: DerivedBindingOptions<GetT>
+): ReadonlyBinding<GetT> => {
+  const {
     id,
     deps = [],
     areInputValuesEqual,
     detectInputChanges = true,
     makeComparableInputValue,
     areOutputValuesEqual,
-    detectOutputChanges = true,
-    // LimiterOptions
-    limitMode,
-    limitMSec,
-    limitType,
-    priority,
-    queue
-  }: DerivedBindingOptions<GetT>
-): ReadonlyBinding<GetT> => {
-  const limiterOptions = { limitMode, limitMSec, limitType, priority, queue };
+    detectOutputChanges = true
+  } = options;
+
+  const limiterOptions = pickLimiterOptions(options);
 
   const isMounted = useIsMountedRef();
 
