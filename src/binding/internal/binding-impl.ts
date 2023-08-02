@@ -207,6 +207,9 @@ export class BindingImpl<GetType = any> implements Binding<GetType> {
           case 'set-raw':
             this.setRaw(pending.value);
             break;
+          case 'reset':
+            // Nothing to do here, handled above
+            break;
         }
       }
     };
