@@ -18,7 +18,7 @@ export interface DerivedBindingOptions<GetT> extends LimiterOptions {
    *
    * @defaultValue `_.isEqual`, which can be globally overridden using `setAreEqual`
    */
-  areInputValuesEqual?: (a: any, b: any) => true;
+  areInputValuesEqual?: (a: any, b: any) => boolean;
   /**
    * - If `true` – `areInputValuesEqual` is used to compare the old and new results of `makeComparableInputValue` when any of the input
    * bindings or `deps` are changed.  If the values are equal, the transformer won't be run.  If they're unequal, the transformer will be
@@ -42,7 +42,7 @@ export interface DerivedBindingOptions<GetT> extends LimiterOptions {
    *
    * @defaultValue `_.isEqual`, which can be globally overridden using `setAreEqual`
    */
-  areOutputValuesEqual?: (a: GetT, b: GetT) => any;
+  areOutputValuesEqual?: (a: GetT, b: GetT) => boolean;
   /**
    * - If `true` – `areOutputValuesEqual` is used to compare the old and new results of the transformer function, each time it's run.  If the
    * values are equal, the derived binding's value won't be changed.  If they're unequal, the binding value will be changed and listeners

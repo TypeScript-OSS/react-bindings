@@ -6,5 +6,4 @@ export const isBinding = (value: any): value is ReadonlyBinding =>
   value !== null && typeof value === 'object' && 'isBinding' in value && value.isBinding === true;
 
 /** Returns a readonly binding if the specified value is a binding.  Otherwise, returns undefined */
-export const ifBinding = <T>(value: ReadonlyBinding<T> | any): ReadonlyBinding<T> | undefined =>
-  isBinding(value) ? (value as ReadonlyBinding<T>) : undefined;
+export const ifBinding = <T>(value: any): ReadonlyBinding<T> | undefined => (isBinding(value) ? (value as ReadonlyBinding<T>) : undefined);
