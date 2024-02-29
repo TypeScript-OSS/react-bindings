@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import type { BindingArrayDependencies } from './binding-dependencies';
 import type { InferBindingGetType } from './inference';
 import type { ReadonlyBinding } from './readonly-binding';

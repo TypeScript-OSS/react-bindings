@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import type { BindingArrayDependencies, BindingDependencies, NamedBindingDependencies } from './binding-dependencies';
 import type { InferBindingsArrayValueTypes } from './infer-bindings-array-value-types';
 import type { InferNamedBindingsValueTypes } from './infer-named-binding-value-types';

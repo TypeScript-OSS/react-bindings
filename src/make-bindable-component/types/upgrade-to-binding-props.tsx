@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
 
 export type UpgradeToBindingsProps<PropsT extends Record<string, any>, PassThruKeyT extends keyof PropsT & string = never> = {

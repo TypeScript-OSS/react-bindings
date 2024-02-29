@@ -12,3 +12,4 @@ export * from './synchronization/exports';
 export * from './types/exports';
 export * from './use-binding-effect/exports';
 export * from './utility-hooks/exports';
+export * from './waiting/exports';
