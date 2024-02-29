@@ -1,4 +1,7 @@
+import type { DoubleLinkedListNode } from '../../binding/internal/DoubleLinkedList';
+import { DoubleLinkedList } from '../../binding/internal/DoubleLinkedList';
 import type { BindingArrayDependencies, BindingDependencies, NamedBindingDependencies } from '../../binding/types/binding-dependencies';
+import type { ChangeListener } from '../../binding/types/change-listener';
 import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
 import { isBinding } from '../../binding-utils/type-utils';
 import { getLogger } from '../../config/logging';
@@ -34,30 +37,51 @@ export const makeTransientDerivedBinding = <GetT, DependenciesT extends BindingD
 
   const uid = makeUID();
 
+  /** Registered change listeners */
+  let onChangeListeners: DoubleLinkedList<ChangeListener> | undefined;
+
   return {
     isBinding: true,
     id: id ?? uid,
     uid,
     addChangeListener: (listener) => {
+      if (onChangeListeners === undefined) {
+        onChangeListeners = new DoubleLinkedList<ChangeListener>();
+      }
+      let newNode: Readonly<DoubleLinkedListNode<ChangeListener>> | undefined = onChangeListeners.append(listener);
+
       const removers = allBindings.map((b) => b?.addChangeListener(listener));
 
-      let alreadyRemoved = false;
       return () => {
-        if (alreadyRemoved) {
+        if (newNode === undefined) {
           getLogger().debug?.(`A change listener for binding ${id ?? uid} was removed more than once`);
           return;
         }
-        alreadyRemoved = true;
 
         for (const remover of removers) {
           return remover?.();
         }
+
+        onChangeListeners!.remove(newNode);
+        newNode = undefined;
       };
     },
     get: () => transformer(getDependencyValues(), bindings ?? (undefined as any as DependenciesT)),
     getChangeUid: () => allBindings.map((b) => b?.getChangeUid() ?? '').join('+'),
     isModified: () => false,
     isLocked: () => true,
-    lock: () => () => {}
+    lock: () => () => {},
+    triggerChangeListeners: () => {
+      if (onChangeListeners === undefined) {
+        return 0;
+      }
+
+      const listeners = onChangeListeners.toArray();
+      for (const listener of listeners) {
+        listener();
+      }
+
+      return listeners?.length;
+    }
   };
 };

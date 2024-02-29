@@ -36,4 +36,7 @@ export interface ReadonlyBinding<GetType = any> {
    * @returns a function for decrementing this binding's lock count.
    */
   readonly lock: () => () => void;
+
+  /** Forcibly triggers the change listeners.  Don't normally use this! */
+  readonly triggerChangeListeners: () => void;
 }
