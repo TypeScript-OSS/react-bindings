@@ -3,14 +3,14 @@ import { useEffect, useRef } from 'react';
 import type { BindingDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
 import type { InferBindingValueTypes } from '../binding/types/infer-binding-value-types';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
-import { useBinding } from '../binding/use-binding';
-import { isBinding } from '../binding-utils/type-utils';
-import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
-import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
-import { getTypedKeys } from '../internal-utils/get-typed-keys';
-import { pickLimiterOptions } from '../limiter/pick-limiter-options';
-import { useBindingEffect } from '../use-binding-effect/use-binding-effect';
-import { useStableValue } from '../utility-hooks/use-stable-value';
+import { useBinding } from '../binding/use-binding.js';
+import { isBinding } from '../binding-utils/type-utils.js';
+import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref.js';
+import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values.js';
+import { getTypedKeys } from '../internal-utils/get-typed-keys.js';
+import { pickLimiterOptions } from '../limiter/pick-limiter-options.js';
+import { useBindingEffect } from '../use-binding-effect/use-binding-effect.js';
+import { useStableValue } from '../utility-hooks/use-stable-value.js';
 import type { DerivedBindingOptions } from './derived-binding/options';
 
 /**

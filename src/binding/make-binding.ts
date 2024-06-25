@@ -1,7 +1,7 @@
-import { getStatsHandler } from '../config/stats-handler';
-import { getTypedKeys } from '../internal-utils/get-typed-keys';
+import { getStatsHandler } from '../config/stats-handler.js';
+import { getTypedKeys } from '../internal-utils/get-typed-keys.js';
 import type { EmptyObject } from '../types/empty';
-import { BindingImpl } from './internal/binding-impl';
+import { BindingImpl } from './internal/binding-impl.js';
 import type { Binding } from './types/binding';
 import type { MakeBindingArgs } from './types/binding-args';
 import type { BindingInitializer } from './types/binding-initializer';
@@ -15,8 +15,7 @@ export const makeBinding = <GetType = any, ExtraFieldsT extends object = EmptyOb
   const extraFields = args.addFields?.(output);
   if (extraFields !== undefined) {
     for (const key of getTypedKeys(extraFields)) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      output[key] = extraFields[key] as any;
+      output[key] = extraFields[key] as (typeof output)[typeof key];
     }
   }
 

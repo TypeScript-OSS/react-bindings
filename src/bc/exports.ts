@@ -1,1 +1,1 @@
-export * from './bc';
+export * from './bc.js';

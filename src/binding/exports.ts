@@ -1,3 +1,3 @@
-export * from './make-binding';
-export * from './types/exports';
-export * from './use-binding';
+export * from './make-binding.js';
+export * from './types/exports.js';
+export * from './use-binding.js';

@@ -1,9 +1,9 @@
 import { waitFor } from '@testing-library/react';
 import React from 'react';
 
-import { runInDom } from '../../__test_dependency__';
-import { useBinding } from '../../binding/use-binding';
-import { makeBindableComponent } from '../make-bindable-component';
+import { runInDom } from '../../__test_dependency__/index.js';
+import { useBinding } from '../../binding/use-binding.js';
+import { makeBindableComponent } from '../make-bindable-component.js';
 
 describe('makeBindableComponent', () => {
   it('should work', () =>

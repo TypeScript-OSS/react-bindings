@@ -1,5 +1,5 @@
-import { makeBinding } from '../../binding/make-binding';
-import { areAnyBindingsModified } from '../modified-utils';
+import { makeBinding } from '../../binding/make-binding.js';
+import { areAnyBindingsModified } from '../modified-utils.js';
 
 describe('areAnyBindingsModified', () => {
   it('should return false for no bindings specified', () => {

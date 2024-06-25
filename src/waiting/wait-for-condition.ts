@@ -1,10 +1,10 @@
 import type { BindingArrayDependencies, BindingDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
 import type { InferBindingValueTypes } from '../binding/types/infer-binding-value-types';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
-import { isBinding } from '../binding-utils/type-utils';
-import { normalizeAsArray } from '../internal-utils/array-like';
-import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
-import { getTypedKeys } from '../internal-utils/get-typed-keys';
+import { isBinding } from '../binding-utils/type-utils.js';
+import { normalizeAsArray } from '../internal-utils/array-like.js';
+import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values.js';
+import { getTypedKeys } from '../internal-utils/get-typed-keys.js';
 import type { EmptyObject } from '../types/empty';
 
 const emptyDependencies = Object.freeze({} as EmptyObject);

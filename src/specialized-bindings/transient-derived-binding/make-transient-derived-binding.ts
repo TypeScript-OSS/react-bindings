@@ -1,14 +1,15 @@
-import type { DoubleLinkedListNode } from '../../binding/internal/DoubleLinkedList';
-import { DoubleLinkedList } from '../../binding/internal/DoubleLinkedList';
+import type { DoubleLinkedListNode } from 'doublell';
+import { DoubleLinkedList } from 'doublell';
+
 import type { BindingArrayDependencies, BindingDependencies, NamedBindingDependencies } from '../../binding/types/binding-dependencies';
 import type { ChangeListener } from '../../binding/types/change-listener';
 import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
-import { isBinding } from '../../binding-utils/type-utils';
-import { getLogger } from '../../config/logging';
-import { normalizeAsArray } from '../../internal-utils/array-like';
-import { extractBindingDependencyValues } from '../../internal-utils/extract-binding-dependency-values';
-import { getTypedKeys } from '../../internal-utils/get-typed-keys';
-import { makeUID } from '../../internal-utils/uid';
+import { isBinding } from '../../binding-utils/type-utils.js';
+import { getLogger } from '../../config/logging.js';
+import { normalizeAsArray } from '../../internal-utils/array-like.js';
+import { extractBindingDependencyValues } from '../../internal-utils/extract-binding-dependency-values.js';
+import { getTypedKeys } from '../../internal-utils/get-typed-keys.js';
+import { makeUID } from '../../internal-utils/uid.js';
 import type { EmptyObject } from '../../types/empty';
 import type { UseDerivedBindingTransformer } from '../derived-binding/use-derived-binding';
 import type { MakeTransientDerivedBindingArgs } from './types/transient-derived-binding-args';

@@ -2,16 +2,16 @@ import { UI_PRIORITY } from 'client-run-queue';
 import React, { useRef } from 'react';
 
 import type { BindingDependencies, NamedBindingDependencies } from '../../binding/types/binding-dependencies';
-import { isBinding } from '../../binding-utils/type-utils';
-import { extractBindingDependencyValues } from '../../internal-utils/extract-binding-dependency-values';
-import { getTypedKeys } from '../../internal-utils/get-typed-keys';
-import { pickLimiterOptions } from '../../limiter/pick-limiter-options';
-import { useBindingEffect } from '../../use-binding-effect/use-binding-effect';
-import { Refreshable } from './internal/Refreshable';
+import { isBinding } from '../../binding-utils/type-utils.js';
+import { extractBindingDependencyValues } from '../../internal-utils/extract-binding-dependency-values.js';
+import { getTypedKeys } from '../../internal-utils/get-typed-keys.js';
+import { pickLimiterOptions } from '../../limiter/pick-limiter-options.js';
+import { useBindingEffect } from '../../use-binding-effect/use-binding-effect.js';
+import { Refreshable } from './internal/Refreshable.js';
 import type { BindingsConsumerProps } from './types/props';
 import type { BindingsConsumerRenderCallback } from './types/render-callback';
 
-export * from './types/exports';
+export * from './types/exports.js';
 
 /**
  * A component that is rerendered based on input binding changes.
@@ -53,6 +53,7 @@ export const BindingsConsumer = <DependenciesT extends BindingDependencies>(
   const getDependencies = () => bindings as DependenciesT;
 
   // Doesn't need to be stable since Refreshable will always get rendered with the latest anyway
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   const getDependencyValues = () => extractBindingDependencyValues<DependenciesT>({ bindings, namedBindingsKeys });
 

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import { areEqual } from '../config/are-equal';
+import { areEqual } from '../config/are-equal.js';
 
 /**
  * Remembers the specified value across renders and compares it against a stored value, which is returned.  The stored value is only updated

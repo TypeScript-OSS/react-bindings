@@ -1,2 +1,2 @@
-export * from './make-bindable-component-options';
-export * from './upgrade-to-binding-props';
+export * from './make-bindable-component-options.js';
+export * from './upgrade-to-binding-props.js';

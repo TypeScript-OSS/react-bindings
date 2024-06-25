@@ -3,10 +3,10 @@ import { waitFor } from '@testing-library/react';
 import type { ComponentType } from 'react';
 import React from 'react';
 
-import { runInDom } from '../../__test_dependency__';
-import { useBinding } from '../../binding/use-binding';
-import { BindingsConsumer } from '../../components/BindingsConsumer';
-import { useStableValue } from '../use-stable-value';
+import { runInDom } from '../../__test_dependency__/index.js';
+import { useBinding } from '../../binding/use-binding.js';
+import { BindingsConsumer } from '../../components/BindingsConsumer/index.js';
+import { useStableValue } from '../use-stable-value.js';
 
 describe('useStableValue', () => {
   it('stable values should only change when they change according to areEqual', () =>

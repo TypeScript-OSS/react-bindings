@@ -1,4 +1,4 @@
-import { makeBinding } from '../make-binding';
+import { makeBinding } from '../make-binding.js';
 
 describe('makeBinding', () => {
   it('basic use should work', () => {

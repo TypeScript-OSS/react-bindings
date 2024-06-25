@@ -1,6 +1,6 @@
 import type { Binding } from '../binding/types/binding';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
-import { useBindingEffect } from '../use-binding-effect/use-binding-effect';
+import { useBindingEffect } from '../use-binding-effect/use-binding-effect.js';
 import type { UseBindingSyncOptions } from './types/options';
 
 /** Synchronizes a source binding into a destination binding */

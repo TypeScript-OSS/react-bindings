@@ -1,2 +1,2 @@
-export * from './options';
-export * from './use-derived-binding';
+export * from './options.js';
+export * from './use-derived-binding.js';

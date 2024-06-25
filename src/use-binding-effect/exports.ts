@@ -1,2 +1,2 @@
-export * from './types/exports';
-export * from './use-binding-effect';
+export * from './types/exports.js';
+export * from './use-binding-effect.js';

@@ -3,7 +3,7 @@ import { RunQueue } from 'client-run-queue';
 import type { PropsWithChildren } from 'react';
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
 
-import { useStableValue } from '../utility-hooks/use-stable-value';
+import { useStableValue } from '../utility-hooks/use-stable-value.js';
 
 const DefaultQueueContext = React.createContext<RunQueue>(new RunQueue('default'));
 

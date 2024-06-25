@@ -1,8 +1,8 @@
 import { jest } from '@jest/globals';
 
-import { sleep } from '../../__test_dependency__';
-import { makeBinding } from '../../binding/make-binding';
-import { lockBindingsAndDo } from '../lock-utils';
+import { sleep } from '../../__test_dependency__/sleep.js';
+import { makeBinding } from '../../binding/make-binding.js';
+import { lockBindingsAndDo } from '../lock-utils.js';
 
 describe('lockBindingsAndDo', () => {
   describe('with synchronous callback', () => {

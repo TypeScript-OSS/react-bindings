@@ -1,1 +1,1 @@
-export * from './transient-derived-binding-args';
+export * from './transient-derived-binding-args.js';

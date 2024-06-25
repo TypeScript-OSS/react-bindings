@@ -1,5 +1,5 @@
-import { makeBinding } from '../../binding/make-binding';
-import { waitForCondition } from '../wait-for-condition';
+import { makeBinding } from '../../binding/make-binding.js';
+import { waitForCondition } from '../wait-for-condition.js';
 
 const ONE_SEC_MSEC = 1000;
 

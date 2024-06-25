@@ -1,2 +1,2 @@
-export * from './use-callback-ref';
-export * from './use-stable-value';
+export * from './use-callback-ref.js';
+export * from './use-stable-value.js';

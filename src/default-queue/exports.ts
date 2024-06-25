@@ -1,1 +1,1 @@
-export * from './default-queue-context';
+export * from './default-queue-context.js';

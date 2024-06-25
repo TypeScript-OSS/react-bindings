@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 import type { BindingDependencies } from '../../../binding/types/binding-dependencies';
 import type { InferBindingValueTypes } from '../../../binding/types/infer-binding-value-types';
-import { useIsMountedRef } from '../../../internal-hooks/use-is-mounted-ref';
+import { useIsMountedRef } from '../../../internal-hooks/use-is-mounted-ref.js';
 import type { BindingsConsumerRenderCallback } from '../types/render-callback';
 
 /** A component that returns a refresh method that can be used to manually rerender */

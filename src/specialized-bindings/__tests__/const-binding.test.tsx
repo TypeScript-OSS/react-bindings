@@ -1,11 +1,11 @@
 import { waitFor } from '@testing-library/react';
 import React from 'react';
 
-import { runInDom } from '../../__test_dependency__';
+import { runInDom } from '../../__test_dependency__/index.js';
 import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
-import { useBinding } from '../../binding/use-binding';
-import { BindingsConsumer } from '../../components/BindingsConsumer';
-import { useConstBinding } from '../const-binding';
+import { useBinding } from '../../binding/use-binding.js';
+import { BindingsConsumer } from '../../components/BindingsConsumer/index.js';
+import { useConstBinding } from '../const-binding.js';
 
 describe('useConstBinding', () => {
   it('initial value should work', () =>

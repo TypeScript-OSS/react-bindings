@@ -4,16 +4,16 @@ import type { BindingArrayDependencies, BindingDependencies, NamedBindingDepende
 import type { ChangeListenerRemover } from '../binding/types/change-listener';
 import type { InferBindingValueTypes } from '../binding/types/infer-binding-value-types';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
-import { isBinding } from '../binding-utils/type-utils';
-import { areEqual } from '../config/are-equal';
-import { normalizeAsArray } from '../internal-utils/array-like';
-import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values';
-import { getTypedKeys } from '../internal-utils/get-typed-keys';
-import { pickLimiterOptions } from '../limiter/pick-limiter-options';
-import { useLimiter } from '../limiter/use-limiter';
+import { isBinding } from '../binding-utils/type-utils.js';
+import { areEqual } from '../config/are-equal.js';
+import { normalizeAsArray } from '../internal-utils/array-like.js';
+import { extractBindingDependencyValues } from '../internal-utils/extract-binding-dependency-values.js';
+import { getTypedKeys } from '../internal-utils/get-typed-keys.js';
+import { pickLimiterOptions } from '../limiter/pick-limiter-options.js';
+import { useLimiter } from '../limiter/use-limiter.js';
 import type { EmptyObject } from '../types/empty';
-import { useCallbackRef } from '../utility-hooks/use-callback-ref';
-import { useStableValue } from '../utility-hooks/use-stable-value';
+import { useCallbackRef } from '../utility-hooks/use-callback-ref.js';
+import { useStableValue } from '../utility-hooks/use-stable-value.js';
 import type { UseBindingEffectOptions } from './types/options';
 
 const emptyDependencies = Object.freeze({} as EmptyObject);
@@ -66,7 +66,6 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies>(
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   const getDependencyValues = () => extractBindingDependencyValues<DependenciesT>({ bindings, namedBindingsKeys });
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   const comparableInputValueMaker = makeComparableInputValue ?? getDependencyValues;
   const lastComparableInputValue = useRef(
     detectInputChanges && (triggerOnMount === false || triggerOnMount === 'if-input-changed') ? comparableInputValueMaker() : undefined

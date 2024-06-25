@@ -1,2 +1,2 @@
-export * from './make-bindable-component';
-export * from './types/exports';
+export * from './make-bindable-component.js';
+export * from './types/exports.js';

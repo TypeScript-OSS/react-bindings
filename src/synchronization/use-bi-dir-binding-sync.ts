@@ -1,5 +1,5 @@
 import type { Binding } from '../binding/types/binding';
-import { useBindingEffect } from '../use-binding-effect/use-binding-effect';
+import { useBindingEffect } from '../use-binding-effect/use-binding-effect.js';
 import type { UseBindingSyncOptions } from './types/options';
 
 /**

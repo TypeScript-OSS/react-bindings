@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
-import _ from 'lodash';
+import { isEqual } from 'lodash-es';
 
-let globalAreEqual = (a: any, b: any) => _.isEqual(a, b);
+let globalAreEqual = (a: any, b: any) => isEqual(a, b);
 
 /** Uses the function registered with `setAreEqual` to determine if two values are equal */
 export const areEqual = (a: any, b: any) => globalAreEqual(a, b);

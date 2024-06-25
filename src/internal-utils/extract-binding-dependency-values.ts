@@ -1,6 +1,6 @@
 import type { BindingDependencies, NamedBindingDependencies } from '../binding/types/binding-dependencies';
 import type { InferBindingValueTypes } from '../binding/types/infer-binding-value-types';
-import { isBinding } from '../binding-utils/type-utils';
+import { isBinding } from '../binding-utils/type-utils.js';
 
 export const extractBindingDependencyValues = <DependenciesT extends BindingDependencies>({
   bindings,

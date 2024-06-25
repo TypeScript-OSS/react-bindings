@@ -1,9 +1,9 @@
 import React from 'react';
 
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
-import { isBinding } from '../binding-utils/type-utils';
-import { BindingsConsumer } from '../components/BindingsConsumer';
-import { resolveTypeOrBindingType } from '../resolveable/utils';
+import { isBinding } from '../binding-utils/type-utils.js';
+import { BindingsConsumer } from '../components/BindingsConsumer/index.js';
+import { resolveTypeOrBindingType } from '../resolveable/utils.js';
 import type { MakeBindableComponentOptions } from './types/make-bindable-component-options';
 import type { UpgradeToBindingsProps } from './types/upgrade-to-binding-props';
 

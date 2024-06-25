@@ -1,8 +1,8 @@
 import { jest } from '@jest/globals';
 
-import { runInDom, sleep } from '../../../__test_dependency__';
-import { useBinding } from '../../../binding/use-binding';
-import { useDerivedBinding } from '../use-derived-binding';
+import { runInDom, sleep } from '../../../__test_dependency__/index.js';
+import { useBinding } from '../../../binding/use-binding.js';
+import { useDerivedBinding } from '../use-derived-binding.js';
 
 describe('useDerivedBinding', () => {
   it('initial value should work with multiple dependencies', () =>

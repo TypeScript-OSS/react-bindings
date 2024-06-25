@@ -1,2 +1,2 @@
-export * from './array-like';
-export * from './empty';
+export * from './array-like.js';
+export * from './empty.js';

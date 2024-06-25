@@ -1,5 +1,5 @@
-import { makeBinding } from '../../binding/make-binding';
-import { lockAllBindings } from '../lock-utils';
+import { makeBinding } from '../../binding/make-binding.js';
+import { lockAllBindings } from '../lock-utils.js';
 
 describe('lockAllBindings', () => {
   it('should work with no bindings', () => {

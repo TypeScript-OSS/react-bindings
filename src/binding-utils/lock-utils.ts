@@ -1,5 +1,5 @@
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
-import { makeValueThenDo } from './internal/make-value-then-do';
+import { makeValueThenDo } from './internal/make-value-then-do.js';
 
 /**
  * Checks if any of the specified bindings have been locked.

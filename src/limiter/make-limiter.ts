@@ -1,7 +1,7 @@
 import type { RunQueue } from 'client-run-queue';
 import { DEFAULT_PRIORITY } from 'client-run-queue';
 
-import { LimiterImpl } from './internal/LimiterImpl';
+import { LimiterImpl } from './internal/LimiterImpl.js';
 import type { Limiter } from './types/Limiter';
 import type { LimiterOptions } from './types/LimiterOptions';
 

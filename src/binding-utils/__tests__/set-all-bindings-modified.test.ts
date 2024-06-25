@@ -1,5 +1,5 @@
-import { makeBinding } from '../../binding/make-binding';
-import { setAllBindingsModified } from '../modified-utils';
+import { makeBinding } from '../../binding/make-binding.js';
+import { setAllBindingsModified } from '../modified-utils.js';
 
 describe('setAllBindingsModified', () => {
   it('should work with no bindings', () => {

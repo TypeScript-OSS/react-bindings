@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
 
-import { BindingImpl } from '../binding-impl';
+import { BindingImpl } from '../binding-impl.js';
 
 describe('BindingImpl', () => {
   describe('with set value transformer', () => {

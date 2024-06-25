@@ -2,8 +2,8 @@ import { jest } from '@jest/globals';
 import type { ComponentType } from 'react';
 import React from 'react';
 
-import { runInDom } from '../../../__test_dependency__';
-import { useBinding } from '../../../binding/use-binding';
+import { runInDom } from '../../../__test_dependency__/index.js';
+import { useBinding } from '../../../binding/use-binding.js';
 import { BindingsConsumer } from '..';
 
 describe('BindingsConsumer', () => {

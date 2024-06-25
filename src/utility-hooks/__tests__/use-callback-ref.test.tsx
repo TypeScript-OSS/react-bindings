@@ -1,10 +1,10 @@
 import { waitFor } from '@testing-library/react';
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import { runInDom } from '../../__test_dependency__';
-import { useBinding } from '../../binding/use-binding';
-import { BindingsConsumer } from '../../components/BindingsConsumer';
-import { useCallbackRef } from '../use-callback-ref';
+import { runInDom } from '../../__test_dependency__/index.js';
+import { useBinding } from '../../binding/use-binding.js';
+import { BindingsConsumer } from '../../components/BindingsConsumer/index.js';
+import { useCallbackRef } from '../use-callback-ref.js';
 
 describe('useCallbackRef', () => {
   it("useCallbackRef changes shouldn't cause useEffect to rerun, unlike regular useCallback changes", () =>

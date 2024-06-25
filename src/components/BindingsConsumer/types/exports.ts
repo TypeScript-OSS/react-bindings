@@ -1,2 +1,2 @@
-export * from './props';
-export * from './render-callback';
+export * from './props.js';
+export * from './render-callback.js';

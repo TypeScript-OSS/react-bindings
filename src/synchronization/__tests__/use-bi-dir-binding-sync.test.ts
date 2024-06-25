@@ -1,8 +1,8 @@
 import { waitFor } from '@testing-library/react';
 
-import { runInDom } from '../../__test_dependency__';
-import { useBinding } from '../../binding/use-binding';
-import { useBiDirBindingSync } from '../use-bi-dir-binding-sync';
+import { runInDom } from '../../__test_dependency__/index.js';
+import { useBinding } from '../../binding/use-binding.js';
+import { useBiDirBindingSync } from '../use-bi-dir-binding-sync.js';
 
 describe('useBiDirBindingSync', () => {
   it('should work', () =>

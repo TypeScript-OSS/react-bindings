@@ -1,5 +1,5 @@
-import { makeBinding } from '../../binding/make-binding';
-import { areAnyBindingsLocked } from '../lock-utils';
+import { makeBinding } from '../../binding/make-binding.js';
+import { areAnyBindingsLocked } from '../lock-utils.js';
 
 describe('areAnyBindingsLocked', () => {
   it('should return false for no bindings specified', () => {

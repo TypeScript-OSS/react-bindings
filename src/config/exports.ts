@@ -1,5 +1,5 @@
 /* istanbul ignore file */
 
-export * from './are-equal';
-export * from './logging';
-export * from './stats-handler';
+export * from './are-equal.js';
+export * from './logging.js';
+export * from './stats-handler.js';

@@ -1,5 +1,5 @@
-import { makeBinding } from '../../binding/make-binding';
-import { resolveTypeOrDeferredTypeOrBindingType } from '../utils';
+import { makeBinding } from '../../binding/make-binding.js';
+import { resolveTypeOrDeferredTypeOrBindingType } from '../utils.js';
 
 describe('resolveTypeOrDeferredTypeOrBindingType', () => {
   it('number should return number', () => {

@@ -1,6 +1,6 @@
-import { runInDom, sleep } from '../../__test_dependency__';
-import { useBinding } from '../../binding/use-binding';
-import { useFlattenedBinding } from '../flattened-binding';
+import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { useBinding } from '../../binding/use-binding.js';
+import { useFlattenedBinding } from '../flattened-binding.js';
 
 describe('useFlattenedBinding', () => {
   it('initial value should work', () =>

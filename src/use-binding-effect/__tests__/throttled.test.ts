@@ -1,8 +1,8 @@
 import { jest } from '@jest/globals';
 
-import { runInDom, sleep } from '../../__test_dependency__';
-import { useBinding } from '../../binding/use-binding';
-import { useBindingEffect } from '../use-binding-effect';
+import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { useBinding } from '../../binding/use-binding.js';
+import { useBindingEffect } from '../use-binding-effect.js';
 
 describe('useBindingEffect', () => {
   it('trailing throttled effects should be run only when the elapsed interval has been reached', () =>

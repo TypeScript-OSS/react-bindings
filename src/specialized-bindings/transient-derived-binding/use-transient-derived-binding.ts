@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import type { BindingDependencies } from '../../binding/types/binding-dependencies';
 import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
 import type { UseDerivedBindingTransformer } from '../derived-binding/use-derived-binding';
-import { makeTransientDerivedBinding } from './make-transient-derived-binding';
+import { makeTransientDerivedBinding } from './make-transient-derived-binding.js';
 import type { UseTransientDerivedBindingArgs } from './types/transient-derived-binding-args';
 
 const emptyDeps: DependencyList = Object.freeze([]);

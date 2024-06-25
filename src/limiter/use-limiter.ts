@@ -1,8 +1,8 @@
 import { DEFAULT_PRIORITY } from 'client-run-queue';
 import { useEffect, useMemo, useRef } from 'react';
 
-import { useDefaultQueue } from '../default-queue/default-queue-context';
-import { LimiterImpl } from './internal/LimiterImpl';
+import { useDefaultQueue } from '../default-queue/default-queue-context.js';
+import { LimiterImpl } from './internal/LimiterImpl.js';
 import type { Limiter } from './types/Limiter';
 import type { LimiterOptions } from './types/LimiterOptions';
 

@@ -1,6 +1,6 @@
-import { makeBinding } from '../binding/make-binding';
+import { makeBinding } from '../binding/make-binding.js';
 import type { ReadonlyBinding } from '../binding/types/readonly-binding';
-import { useBinding } from '../binding/use-binding';
+import { useBinding } from '../binding/use-binding.js';
 
 export interface ConstBindingArgs {
   /** A technical, but human-readable ID, which isn't guaranteed to be unique */

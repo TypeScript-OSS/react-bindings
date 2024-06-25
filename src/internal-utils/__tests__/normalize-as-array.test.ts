@@ -1,4 +1,4 @@
-import { normalizeAsArray } from '../array-like';
+import { normalizeAsArray } from '../array-like.js';
 
 describe('normalizeAsArray', () => {
   it('undefined should return an array with [undefined]', () => {

@@ -1,15 +1,16 @@
-import { areEqual as globalAreEqual } from '../../config/are-equal';
-import { getLogger, isSpecialLoggingEnabledFor } from '../../config/logging';
-import { getStatsHandler } from '../../config/stats-handler';
-import { makeUID } from '../../internal-utils/uid';
+import type { DoubleLinkedListNode } from 'doublell';
+import { DoubleLinkedList } from 'doublell';
+
+import { areEqual as globalAreEqual } from '../../config/are-equal.js';
+import { getLogger, isSpecialLoggingEnabledFor } from '../../config/logging.js';
+import { getStatsHandler } from '../../config/stats-handler.js';
+import { makeUID } from '../../internal-utils/uid.js';
 import type { Binding } from '../types/binding';
 import type { BindingConstructorArgs } from '../types/binding-args';
 import type { BindingInitializer } from '../types/binding-initializer';
 import type { ChangeListener } from '../types/change-listener';
 import type { SetValueTransformer } from '../types/set-value-transformer';
-import { LOCK_DURATION_WARNING_INTERVAL_MSEC } from './consts';
-import type { DoubleLinkedListNode } from './DoubleLinkedList';
-import { DoubleLinkedList } from './DoubleLinkedList';
+import { LOCK_DURATION_WARNING_INTERVAL_MSEC } from './consts.js';
 
 /** A pending update on a binding */
 type PendingUpdate<GetType = any> =

@@ -2,10 +2,10 @@ import { jest } from '@jest/globals';
 import { waitFor } from '@testing-library/react';
 import React from 'react';
 
-import { runInDom, sleep } from '../../__test_dependency__';
-import { useBinding } from '../../binding/use-binding';
-import { BindingsConsumer } from '../../components/BindingsConsumer';
-import { useBindingEffect } from '../use-binding-effect';
+import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { useBinding } from '../../binding/use-binding.js';
+import { BindingsConsumer } from '../../components/BindingsConsumer/index.js';
+import { useBindingEffect } from '../use-binding-effect.js';
 
 describe('useBindingEffect', () => {
   it('with triggerOnMount=false, callback should not be run on mount even if bindings changed between render and mount', () =>

@@ -1,5 +1,5 @@
-import { makeConstBinding } from '../../specialized-bindings/const-binding';
-import { extractBindingDependencyValues } from '../extract-binding-dependency-values';
+import { makeConstBinding } from '../../specialized-bindings/const-binding.js';
+import { extractBindingDependencyValues } from '../extract-binding-dependency-values.js';
 
 describe('extractBindingDependencyValues', () => {
   it('undefined bindings should work', () => {

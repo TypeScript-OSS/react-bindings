@@ -1,8 +1,8 @@
 import type { RunQueue } from 'client-run-queue';
 import React from 'react';
 
-import { runInDom } from '../../__test_dependency__';
-import { DefaultQueueProvider, useDefaultQueue } from '../default-queue-context';
+import { runInDom } from '../../__test_dependency__/index.js';
+import { DefaultQueueProvider, useDefaultQueue } from '../default-queue-context.js';
 
 describe('useDefaultQueue', () => {
   it('default should work', () =>

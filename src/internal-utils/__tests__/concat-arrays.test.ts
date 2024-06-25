@@ -1,4 +1,4 @@
-import { concatArrays } from '../array-like';
+import { concatArrays } from '../array-like.js';
 
 describe('concatArrays', () => {
   it('no parameters should return an empty array', () => {

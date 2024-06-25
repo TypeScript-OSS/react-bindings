@@ -1,4 +1,4 @@
-import { resolveTypeOrDeferredType } from '../utils';
+import { resolveTypeOrDeferredType } from '../utils.js';
 
 describe('resolveTypeOrDeferredType', () => {
   it('number should return number', () => {

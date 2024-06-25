@@ -1,1 +1,1 @@
-export * from './BindingsConsumer';
+export * from './BindingsConsumer/index.js';

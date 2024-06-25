@@ -1,3 +1,3 @@
-export * from './lock-utils';
-export * from './modified-utils';
-export * from './type-utils';
+export * from './lock-utils.js';
+export * from './modified-utils.js';
+export * from './type-utils.js';

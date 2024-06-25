@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
 
-import { runInDom, sleep } from '../../__test_dependency__';
-import { useLimiter } from '../use-limiter';
+import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { useLimiter } from '../use-limiter.js';
 
 describe('useLimiter', () => {
   it('with default settings should run only once enough time is given', () =>

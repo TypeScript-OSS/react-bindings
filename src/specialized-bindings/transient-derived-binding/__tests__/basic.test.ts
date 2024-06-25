@@ -1,8 +1,8 @@
 import { jest } from '@jest/globals';
 
-import { runInDom } from '../../../__test_dependency__';
-import { useBinding } from '../../../binding/use-binding';
-import { makeTransientDerivedBinding } from '../make-transient-derived-binding';
+import { runInDom } from '../../../__test_dependency__/index.js';
+import { useBinding } from '../../../binding/use-binding.js';
+import { makeTransientDerivedBinding } from '../make-transient-derived-binding.js';
 
 describe('makeTransientDerivedBinding', () => {
   it('should work with undefined bindings', () =>

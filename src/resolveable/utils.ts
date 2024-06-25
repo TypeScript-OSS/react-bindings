@@ -1,4 +1,4 @@
-import { isBinding } from '../binding-utils/type-utils';
+import { isBinding } from '../binding-utils/type-utils.js';
 import type { TypeOrBindingType, TypeOrDeferredType, TypeOrDeferredTypeOrBindingType, TypeOrDeferredTypeWithArgs } from './types';
 
 /** Resolves the value out of a TypeOrBindingType */
