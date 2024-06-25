@@ -1,6 +1,6 @@
 import type { RunQueue, RunQueueEntry } from 'client-run-queue';
-import type { DebouncedFunc } from 'lodash';
-import _ from 'lodash';
+import type { DebouncedFunc } from 'lodash-es';
+import { debounce, throttle } from 'lodash-es';
 
 import type { Limiter } from '../types/Limiter';
 import type { LimiterOptions } from '../types/LimiterOptions';
@@ -66,10 +66,10 @@ export class LimiterImpl implements Limiter {
 
       switch (limitType) {
         case 'debounce':
-          this.lodashLimiter_ = _.debounce(func, limitMSec, options);
+          this.lodashLimiter_ = debounce(func, limitMSec, options);
           break;
         case 'throttle':
-          this.lodashLimiter_ = _.throttle(func, limitMSec, options);
+          this.lodashLimiter_ = throttle(func, limitMSec, options);
           break;
       }
     }

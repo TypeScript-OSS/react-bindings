@@ -1,6 +1,6 @@
 {
   "name": "react-bindings",
-  "version": "1.18.0",
+  "version": "1.19.0",
   "description": "Data bindings for React",
   "keywords": [
     "bindings",
@@ -17,8 +17,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.mjs.json",
+    "build": "tsc -p tsconfig.cjs.json && yarn build:mjs",
     "build:dev": "trash dev-build && yarn build && mkdir dev-build && cp -r lib dev-build && cp package.json dev-build && (cd dev-build && echo 'package' `pwd`)",
+    "build:mjs": "tsc -p tsconfig.mjs.json && (for F in `find lib/mjs -name '*.mjs.*'`; do export RENAMED=`echo $F | sed 's/\\.mjs//g'` && cat $F | sed 's/\\.mjs//g' > $RENAMED && rm $F; done)",
     "clean": "trash coverage dev-build docs lib",
     "generate:docs": "npx typedoc src/exports.ts --skipErrorChecking",
     "lint": "eslint 'src/**/*.ts?(x)' --max-warnings 0",
@@ -37,6 +38,7 @@
     "client-run-queue": "2.3.0",
     "doublell": "1.0.0",
     "is-promise": "^4.0.0",
+    "lodash": "4.17.21",
     "lodash-es": "4.17.21"
   },
   "devDependencies": {
@@ -46,6 +48,7 @@
     "@testing-library/dom": "^10.2.0",
     "@testing-library/react": "^16.0.0",
     "@types/jest": "^29.5.12",
+    "@types/lodash": "4.17.5",
     "@types/lodash-es": "4.17.12",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
