@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
 
-import { runInDom } from '../../../__test_dependency__/index.js';
+import { runInDom } from '../../../__test_dependency__/run-in-dom.js';
 import { useBinding } from '../../../binding/use-binding.js';
 import { makeTransientDerivedBinding } from '../make-transient-derived-binding.js';
 

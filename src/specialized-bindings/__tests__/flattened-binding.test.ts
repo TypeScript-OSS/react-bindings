@@ -1,4 +1,5 @@
-import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { runInDom } from '../../__test_dependency__/run-in-dom.js';
+import { sleep } from '../../__test_dependency__/sleep.js';
 import { useBinding } from '../../binding/use-binding.js';
 import { useFlattenedBinding } from '../flattened-binding.js';
 

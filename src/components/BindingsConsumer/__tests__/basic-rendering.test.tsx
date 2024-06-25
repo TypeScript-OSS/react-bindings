@@ -3,7 +3,7 @@ import { waitFor } from '@testing-library/react';
 import type { ComponentType } from 'react';
 import React from 'react';
 
-import { runInDom } from '../../../__test_dependency__/index.js';
+import { runInDom } from '../../../__test_dependency__/run-in-dom.js';
 import type { Binding } from '../../../binding/types/binding';
 import { useBinding } from '../../../binding/use-binding.js';
 import { BindingsConsumer } from '..';

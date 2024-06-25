@@ -1,4 +1,4 @@
-import { runInDom } from '../../__test_dependency__/index.js';
+import { runInDom } from '../../__test_dependency__/run-in-dom.js';
 import { useIsMountedRef } from '../use-is-mounted-ref.js';
 
 describe('useIsMounted', () => {

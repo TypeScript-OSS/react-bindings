@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react';
 import React from 'react';
 
-import { runInDom } from '../../__test_dependency__/index.js';
+import { runInDom } from '../../__test_dependency__/run-in-dom.js';
 import { useBinding } from '../../binding/use-binding.js';
 import { makeBindableComponent } from '../make-bindable-component.js';
 

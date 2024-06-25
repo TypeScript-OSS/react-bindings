@@ -1,7 +1,8 @@
 import { jest } from '@jest/globals';
 import { waitFor } from '@testing-library/react';
 
-import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { runInDom } from '../../__test_dependency__/run-in-dom.js';
+import { sleep } from '../../__test_dependency__/sleep.js';
 import type { ReadonlyBinding } from '../../binding/types/readonly-binding';
 import { useBinding } from '../../binding/use-binding.js';
 import { useBindingEffect } from '../use-binding-effect.js';

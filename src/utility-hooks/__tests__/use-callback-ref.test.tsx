@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react';
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import { runInDom } from '../../__test_dependency__/index.js';
+import { runInDom } from '../../__test_dependency__/run-in-dom.js';
 import { useBinding } from '../../binding/use-binding.js';
 import { BindingsConsumer } from '../../components/BindingsConsumer/index.js';
 import { useCallbackRef } from '../use-callback-ref.js';
