@@ -1,6 +1,6 @@
 {
   "name": "react-bindings",
-  "version": "1.19.2",
+  "version": "1.19.3",
   "description": "Data bindings for React",
   "keywords": [
     "bindings",
@@ -38,8 +38,8 @@
     "react-dom": ">=16.9.0"
   },
   "dependencies": {
-    "client-run-queue": "2.3.1",
-    "doublell": "1.0.4",
+    "client-run-queue": "^2.3.1",
+    "doublell": "^1.0.4",
     "is-promise": "^4.0.0",
     "lodash": "4.17.21",
     "lodash-es": "4.17.21"
@@ -79,7 +79,7 @@
     "react-dom": "18.3.1",
     "trash-cli": "5.0.0",
     "ts-jest": "^29.1.5",
-    "typedoc": "^0.26.2",
+    "typedoc": "^0.26.3",
     "typescript": "5.5.2"
   }
 }
