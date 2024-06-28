@@ -1,6 +1,6 @@
 {
   "name": "react-bindings",
-  "version": "1.19.1",
+  "version": "1.19.2",
   "description": "Data bindings for React",
   "keywords": [
     "bindings",
@@ -9,17 +9,20 @@
     "react-native",
     "typescript"
   ],
-  "main": "lib/cjs/exports.js",
-  "module": "lib/mjs/exports.js",
-  "types": "lib/exports.d.ts",
+  "main": "./lib/cjs/exports.js",
+  "module": "./lib/mjs/exports.mjs",
+  "exports": {
+    "import": "./lib/mjs/exports.mjs",
+    "require": "./lib/cjs/exports.js"
+  },
+  "types": "./lib/exports.d.ts",
   "repository": "https://github.com/TypeScript-OSS/react-bindings.git",
   "homepage": "https://typescript-oss.github.io/react-bindings/",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "tsc -p tsconfig.cjs.json && yarn build:mjs",
+    "build": "tsc -p tsconfig.cjs.json && node ./build.mjs",
     "build:dev": "trash dev-build && yarn build && mkdir dev-build && cp -r lib dev-build && cp package.json dev-build && (cd dev-build && echo 'package' `pwd`)",
-    "build:mjs": "tsc -p tsconfig.mjs.json && (for F in `find lib/mjs -name '*.mjs.*'`; do export RENAMED=`echo $F | sed 's/\\.mjs//g'` && cat $F | sed 's/\\.mjs//g' > $RENAMED && rm $F; done)",
     "clean": "trash coverage dev-build docs lib",
     "generate:docs": "npx typedoc src/exports.ts --skipErrorChecking",
     "lint": "eslint 'src/**/*.ts?(x)' --max-warnings 0",
@@ -36,7 +39,7 @@
   },
   "dependencies": {
     "client-run-queue": "2.3.1",
-    "doublell": "1.0.1",
+    "doublell": "1.0.4",
     "is-promise": "^4.0.0",
     "lodash": "4.17.21",
     "lodash-es": "4.17.21"
@@ -48,12 +51,14 @@
     "@testing-library/dom": "^10.2.0",
     "@testing-library/react": "^16.0.0",
     "@types/jest": "^29.5.12",
-    "@types/lodash": "4.17.5",
+    "@types/lodash": "4.17.6",
     "@types/lodash-es": "4.17.12",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.14.1",
+    "esbuild": "0.21.5",
+    "esbuild-plugin-tsc": "0.4.0",
     "eslint": "9.5.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -65,6 +70,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "eslint-plugin-tsdoc": "^0.3.0",
+    "glob": "10.4.2",
     "jest": "29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "madge": "7.0.0",
