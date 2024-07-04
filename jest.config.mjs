@@ -1,6 +1,6 @@
 export default {
   preset: 'ts-jest',
-  extensionsToTreatAsEsm: [".ts", ".tsx"],
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
   testEnvironment: 'jsdom',
   coverageReporters: ['text', 'html'],
   globals: {
