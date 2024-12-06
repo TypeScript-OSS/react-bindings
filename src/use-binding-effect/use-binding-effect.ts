@@ -72,7 +72,7 @@ export const useBindingEffect = <DependenciesT extends BindingDependencies>(
   );
 
   /** Only used when `detectInputChanges` is `false` and `triggerOnMount` is `'if-input-changed'` */
-  const lastChangeUids = useRef<string | undefined>();
+  const lastChangeUids = useRef<string | undefined>(undefined);
 
   const limiter = useLimiter({
     id: id ?? 'use-binding-effect',

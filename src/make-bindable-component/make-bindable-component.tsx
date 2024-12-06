@@ -18,16 +18,16 @@ import type { UpgradeToBindingsProps } from './types/upgrade-to-binding-props';
  * Bindings can also be passed through by specifying key names in the `passThru` option.
  */
 export function makeBindableComponent<PropsT extends Record<string, any>, PassThruKeyT extends keyof PropsT & string = never>(
-  functionalComponent: (props: PropsT) => JSX.Element
-): (props: UpgradeToBindingsProps<PropsT, PassThruKeyT>) => JSX.Element;
+  functionalComponent: (props: PropsT) => React.JSX.Element
+): (props: UpgradeToBindingsProps<PropsT, PassThruKeyT>) => React.JSX.Element;
 export function makeBindableComponent<PropsT extends Record<string, any>, PassThruKeyT extends keyof PropsT & string = never>(
   options: MakeBindableComponentOptions<PropsT, PassThruKeyT>,
-  functionalComponent: (props: PropsT) => JSX.Element
-): (props: UpgradeToBindingsProps<PropsT, PassThruKeyT>) => JSX.Element;
+  functionalComponent: (props: PropsT) => React.JSX.Element
+): (props: UpgradeToBindingsProps<PropsT, PassThruKeyT>) => React.JSX.Element;
 export function makeBindableComponent<PropsT extends Record<string, any>, PassThruKeyT extends keyof PropsT & string = never>(
-  optionsOrFunctionalComponent: MakeBindableComponentOptions<PropsT, PassThruKeyT> | ((props: PropsT) => JSX.Element),
-  theFunctionalComponent?: (props: PropsT) => JSX.Element
-): (props: UpgradeToBindingsProps<PropsT, PassThruKeyT>) => JSX.Element {
+  optionsOrFunctionalComponent: MakeBindableComponentOptions<PropsT, PassThruKeyT> | ((props: PropsT) => React.JSX.Element),
+  theFunctionalComponent?: (props: PropsT) => React.JSX.Element
+): (props: UpgradeToBindingsProps<PropsT, PassThruKeyT>) => React.JSX.Element {
   const { passThru, bindingsConsumerProps } =
     typeof optionsOrFunctionalComponent === 'function'
       ? ({} satisfies MakeBindableComponentOptions<PropsT, PassThruKeyT>)

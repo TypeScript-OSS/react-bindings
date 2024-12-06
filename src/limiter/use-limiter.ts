@@ -31,7 +31,7 @@ export const useLimiter = ({
 
   queue = queue ?? defaultQueue;
 
-  const previousLimiter = useRef<Limiter | undefined>();
+  const previousLimiter = useRef<Limiter | undefined>(undefined);
   const limiter = useMemo<Limiter>(
     () => new LimiterImpl(id, { limitMSec, limitMode, limitType, priority, queue: queue! }),
     [id, limitMSec, limitMode, limitType, priority, queue]

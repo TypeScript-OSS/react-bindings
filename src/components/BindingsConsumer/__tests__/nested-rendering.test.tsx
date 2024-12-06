@@ -6,7 +6,7 @@ import React from 'react';
 import { runInDom } from '../../../__test_dependency__/run-in-dom.js';
 import type { Binding } from '../../../binding/types/binding';
 import { useBinding } from '../../../binding/use-binding.js';
-import { BindingsConsumer } from '..';
+import { BindingsConsumer } from '../index.js';
 
 describe('BindingsConsumer', () => {
   it('nested initial render should work', () =>
