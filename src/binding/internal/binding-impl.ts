@@ -224,7 +224,7 @@ export class BindingImpl<GetType = any> implements Binding<GetType> {
     if (this.onChangeListeners_ === undefined) {
       this.onChangeListeners_ = new DoubleLinkedList<ChangeListener>();
     }
-    let newNode: Readonly<DoubleLinkedListNode<ChangeListener>> | undefined = this.onChangeListeners_.append(listener);
+    let newNode: DoubleLinkedListNode<ChangeListener> | undefined = this.onChangeListeners_.append(listener);
 
     // Returning function that can be used to remove the same change listener;
     return () => {

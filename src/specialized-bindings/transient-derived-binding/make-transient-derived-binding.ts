@@ -49,7 +49,7 @@ export const makeTransientDerivedBinding = <GetT, DependenciesT extends BindingD
       if (onChangeListeners === undefined) {
         onChangeListeners = new DoubleLinkedList<ChangeListener>();
       }
-      let newNode: Readonly<DoubleLinkedListNode<ChangeListener>> | undefined = onChangeListeners.append(listener);
+      let newNode: DoubleLinkedListNode<ChangeListener> | undefined = onChangeListeners.append(listener);
 
       const removers = allBindings.map((b) => b?.addChangeListener(listener));
 
